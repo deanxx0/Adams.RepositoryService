@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Adams.RespositoryService.Models
 {
-    public class CreateConfiguration
+    public class CreateTrainConfiguration
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,7 +23,7 @@ namespace Adams.RespositoryService.Models
         public bool SaveBestPosition { get; set; }
         public double SavingPercentage { get; set; }
 
-        public CreateConfiguration()
+        public CreateTrainConfiguration()
         {
 
         }

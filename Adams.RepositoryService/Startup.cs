@@ -67,7 +67,7 @@ namespace Adams.RepositoryService.Server
                     ));
             });
 
-            services.AddDbContext<AdamsRepositoryServiceServerDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlite($"Data Source=AdamsRepositoryServiceDB.db");
             });
