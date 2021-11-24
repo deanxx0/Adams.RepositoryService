@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Adams.RepositoryService
+namespace Adams.RepositoryService.Server
 {
     public class Startup
     {

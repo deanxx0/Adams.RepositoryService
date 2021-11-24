@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Adams.RepositoryService.Controllers
+namespace Adams.RepositoryService.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]

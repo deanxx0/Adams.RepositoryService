@@ -1,6 +1,6 @@
 using System;
 
-namespace Adams.RepositoryService
+namespace Adams.RepositoryService.Server
 {
     public class WeatherForecast
     {
