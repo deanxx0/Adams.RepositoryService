@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\naviai-services\NAVIAIServices.RepositoryService\NAVIAIServices.RepositoryService.csproj" />
+  </ItemGroup>
 
 </Project>
