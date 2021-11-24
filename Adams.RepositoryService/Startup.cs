@@ -67,9 +67,11 @@ namespace Adams.RepositoryService.Server
                     ));
             });
 
+            var appDbConnectionString = Configuration.GetValue<string>("AppDbConnectionString");
+
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlite($"Data Source=AdamsRepositoryServiceDB.db");
+                options.UseSqlite(appDbConnectionString);
             });
 
             services.AddSingleton<IRepositoryService>(serviceProvider => RepositoryServiceFactory.Create());
