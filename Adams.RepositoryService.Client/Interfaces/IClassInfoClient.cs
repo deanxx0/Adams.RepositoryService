@@ -10,9 +10,9 @@ namespace Adams.RepositoryService.Client.Interfaces
 {
     public interface IClassInfoClient
     {
-        ClassInfo CreateClassInfo(CreateClassInfo createClassInfo);
-        List<ClassInfo> GetAllClassInfo();
-        ClassInfo GetClassInfo(string classInfoId);
-        ClassInfo DeleteClassInfo(string classInfoId);
+        ClassInfo Create(CreateClassInfo createClassInfo);
+        List<ClassInfo> GetAll();
+        ClassInfo Get(string classInfoId);
+        ClassInfo Delete(string classInfoId);
     }
 }

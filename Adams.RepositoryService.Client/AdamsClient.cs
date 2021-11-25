@@ -5,7 +5,10 @@ using NAVIAIServices.RepositoryService.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,22 +24,51 @@ namespace Adams.RepositoryService.Client
             _httpClient.BaseAddress = new Uri(baseUrl);
         }
 
-        public Project CreateProject(CreateProject createProject)
+        public async Task<bool> LoginAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            using (var response = await _httpClient.PostAsync($"/login/{username}/{password}", null))
+            {
+                if (HttpStatusCode.OK == response.StatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var token = responseContent;
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    return true;
+                }
+                return false;
+            }
         }
 
-        public List<Project> GetAllProject()
+        public async Task<Project> CreateProjectAsync(CreateProject createProject)
         {
-            throw new NotImplementedException();
+            using(var response = await _httpClient.PostAsJsonAsync($"/projects", createProject))
+            {
+                if (response.Content is object && response.Content.Headers.ContentType.MediaType == "application/json")
+                {
+                    var model = HttpContentJsonExtensions.ReadFromJsonAsync<Project>(response.Content).Result;
+                    return model;
+                }
+                else
+                {
+                    Console.WriteLine("HTTP Response was invalid and cannot be deserialised.");
+                }
+                return null;
+            }
         }
 
-        public Project GetProject(string projectId)
+        public async Task<List<Project>> GetAllProjectAsync()
         {
-            throw new NotImplementedException();
+            var projects = await _httpClient.GetFromJsonAsync<List<Project>>($"/projects");
+            return projects;
         }
 
-        public Project DeleteProject(string projectId)
+        public async Task<Project> GetProjectAsync(string projectId)
+        {
+            var project = await _httpClient.GetFromJsonAsync<Project>($"/projects/{projectId}");
+            return project;
+        }
+
+        public async Task<Project> DeleteProjectAsync(string projectId)
         {
             throw new NotImplementedException();
         }

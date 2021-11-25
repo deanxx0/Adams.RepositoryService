@@ -1,4 +1,5 @@
 ﻿using Adams.RepositoryService.Client.Interfaces;
+using Adams.RepositoryService.Client.Utils;
 using Adams.RespositoryService.Models;
 using NAVIAIServices.RepositoryService.Entities;
 using System;
@@ -12,32 +13,35 @@ namespace Adams.RepositoryService.Client.Clients
 {
     internal class ClassInfoClient : IClassInfoClient
     {
-        private readonly string _projectId;
-        private readonly HttpClient _httpClient;
+        private readonly HttpRequester<ClassInfo> _httpRequester;
+
         public ClassInfoClient(string projectId, HttpClient httpClient)
         {
-            _projectId = projectId;
-            _httpClient = httpClient;
+            _httpRequester = new HttpRequester<ClassInfo>(projectId, httpClient);
         }
 
-        public ClassInfo CreateClassInfo(CreateClassInfo createClassInfo)
+        public ClassInfo Create(CreateClassInfo createClassInfo)
         {
-            throw new NotImplementedException();
+            var classInfo = _httpRequester.PostAsync(createClassInfo).Result;
+            return classInfo;
         }
 
-        public List<ClassInfo> GetAllClassInfo()
+        public List<ClassInfo> GetAll()
         {
-            throw new NotImplementedException();
+            var classInfos = _httpRequester.GetListAsync().Result;
+            return classInfos;
         }
 
-        public ClassInfo GetClassInfo(string classInfoId)
+        public ClassInfo Get(string classInfoId)
         {
-            throw new NotImplementedException();
+            var classInfo = _httpRequester.GetAsync(classInfoId).Result;
+            return classInfo;
         }
 
-        public ClassInfo DeleteClassInfo(string classInfoId)
+        public ClassInfo Delete(string classInfoId)
         {
-            throw new NotImplementedException();
+            var classInfo = _httpRequester.DeleteAsync(classInfoId).Result;
+            return classInfo;
         }        
     }
 }

@@ -11,10 +11,11 @@ namespace Adams.RepositoryService.Client
 {
     public interface IAdamsClient
     {
-        Project CreateProject(CreateProject createProject);
-        List<Project> GetAllProject();
-        Project GetProject(string projectId);
-        Project DeleteProject(string projectId);
+        Task<bool> LoginAsync(string username, string password);
+        Task<Project> CreateProjectAsync(CreateProject createProject);
+        Task<List<Project>> GetAllProjectAsync();
+        Task<Project> GetProjectAsync(string projectId);
+        Task<Project> DeleteProjectAsync(string projectId);
         IProjectClient CreateProjectClient(string projectId);
     }
 }

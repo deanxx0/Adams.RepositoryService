@@ -5,4 +5,9 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\naviai-services\NAVIAIServices.RepositoryService\NAVIAIServices.RepositoryService.csproj" />
+    <ProjectReference Include="..\Adams.RespositoryService.Models\Adams.RespositoryService.Models.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //var client = Adams.RepositoryService.Client.AdamsClientFactory.Create("localho");
         }
     }
 }
