@@ -59,6 +59,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetUser(string username)
         {
             var user = _appDbContext.Users.AsQueryable().Where(x => x.UserName == username).FirstOrDefault();
+            if (user == null) return BadRequest($"There is no username {username}");
             return Ok(user);
         }
 
@@ -66,9 +67,10 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult DeleteUser(string username)
         {
             var user = _appDbContext.Users.AsQueryable().Where(x => x.UserName == username).FirstOrDefault();
+            if (user == null) return BadRequest($"There is no username {username}");
             _appDbContext.Users.Remove(user);
             _appDbContext.SaveChanges();
-            return Ok();
+            return Ok(user);
         }
     }
 }
