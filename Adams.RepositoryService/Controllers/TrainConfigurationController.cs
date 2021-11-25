@@ -30,6 +30,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetAllConfiguration(string projectId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var configurations = projectService.TrainConfigurations.Find(x => x.IsEnabled == true).ToList();
             return Ok(configurations);
@@ -39,6 +40,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetConfiguration(string projectId, string configurationId)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var configuration = projectService.TrainConfigurations.Find(x => x.IsEnabled == true && x.Id == configurationId).FirstOrDefault();
             return Ok(configuration);
@@ -64,6 +66,7 @@ namespace Adams.RepositoryService.Server.Controllers
                 createTrainConfiguration.SavingPercentage
                 );
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             projectService.TrainConfigurations.Add(entity);
             return Ok(entity);
@@ -73,6 +76,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult DeleteConfiguration(string projectId, string configurationId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var configuration = projectService.TrainConfigurations.Find(x => x.Id == configurationId).FirstOrDefault();
