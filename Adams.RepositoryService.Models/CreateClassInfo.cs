@@ -5,29 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adams.RespositoryService.Models
+namespace Adams.RepositoryService.Models
 {
-    public class CreateInputChannel
+    public class CreateClassInfo
     {
         [Required]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]
-        public bool IsColor { get; set; }
+        public byte R { get; set; }
         [Required]
-        public string NamingRegex { get; set; }
+        public byte G { get; set; }
+        [Required]
+        public byte B { get; set; }
         [Required]
         public bool IsEnabled { get; set; }
 
-        public CreateInputChannel(string name, bool isColor, string description, string namingRegex)
+        public CreateClassInfo(string name, string Description, byte R, byte G, byte B)
         {
             this.Name = name;
-            this.IsColor = isColor;
-            this.Description = description;
-            this.NamingRegex = namingRegex;
+            this.Description = Description;
+            this.R = R;
+            this.G = G;
+            this.B = B;
         }
-        public CreateInputChannel()
+
+        public CreateClassInfo()
         {
 
         }

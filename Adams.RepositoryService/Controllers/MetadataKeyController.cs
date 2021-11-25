@@ -1,4 +1,4 @@
-﻿using Adams.RespositoryService.Models;
+﻿using Adams.RepositoryService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

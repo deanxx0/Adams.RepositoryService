@@ -5,33 +5,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adams.RespositoryService.Models
+namespace Adams.RepositoryService.Models
 {
-    public class User
+    public class CreateUser
     {
-        [Required]
-        public string Id { get; set; }
         [Required]
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
         [Required]
         public string UserClaim { get; set; }
-        [Required]
-        public DateTime CreatedAt { get; set; }
 
-        public User()
+        public CreateUser()
         {
 
         }
 
-        public User(string userName, string password, string userClaim)
+        public CreateUser(string userName, string password, string userClaim)
         {
-            Id = Guid.NewGuid().ToString();
             UserName = userName;
             Password = password;
             UserClaim = userClaim;
-            CreatedAt = DateTime.Now;
         }
     }
 }

@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAVIAIServices.RepositorySe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAVIAIServices.SDK", "..\naviai-services\NAVIAIServices.SDK\NAVIAIServices.SDK.csproj", "{C942C10A-C029-4C66-A30C-8FF2A6CB61AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adams.RespositoryService.Models", "Adams.RespositoryService.Models\Adams.RespositoryService.Models.csproj", "{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adams.RepositoryService.Client", "Adams.RepositoryService.Client\Adams.RepositoryService.Client.csproj", "{92121019-B672-44CD-B58F-5AB1F92C3CB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{7E11F9E7-D641-452B-AF3E-8A4A498A304F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adams.RepositoryService.Models", "Adams.RepositoryService.Models\Adams.RepositoryService.Models.csproj", "{D1154BBD-DE8A-484B-A90E-CCCA590607C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,14 +47,6 @@ Global
 		{C942C10A-C029-4C66-A30C-8FF2A6CB61AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C942C10A-C029-4C66-A30C-8FF2A6CB61AE}.Release|x64.ActiveCfg = Release|x64
 		{C942C10A-C029-4C66-A30C-8FF2A6CB61AE}.Release|x64.Build.0 = Release|x64
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Debug|x64.ActiveCfg = Debug|x64
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Debug|x64.Build.0 = Debug|x64
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Release|x64.ActiveCfg = Release|Any CPU
-		{9B14F3C0-4D37-4AF8-ADED-DDBF17375BB8}.Release|x64.Build.0 = Release|Any CPU
 		{92121019-B672-44CD-B58F-5AB1F92C3CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92121019-B672-44CD-B58F-5AB1F92C3CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92121019-B672-44CD-B58F-5AB1F92C3CB2}.Debug|x64.ActiveCfg = Debug|x64
@@ -71,6 +63,14 @@ Global
 		{7E11F9E7-D641-452B-AF3E-8A4A498A304F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E11F9E7-D641-452B-AF3E-8A4A498A304F}.Release|x64.ActiveCfg = Release|Any CPU
 		{7E11F9E7-D641-452B-AF3E-8A4A498A304F}.Release|x64.Build.0 = Release|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Debug|x64.Build.0 = Debug|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Release|x64.ActiveCfg = Release|Any CPU
+		{D1154BBD-DE8A-484B-A90E-CCCA590607C4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

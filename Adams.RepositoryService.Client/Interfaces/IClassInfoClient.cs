@@ -1,4 +1,4 @@
-﻿using Adams.RespositoryService.Models;
+﻿using Adams.RepositoryService.Models;
 using NAVIAIServices.RepositoryService.Entities;
 using System;
 using System.Collections.Generic;

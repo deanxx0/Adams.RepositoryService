@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adams.RespositoryService.Models
+namespace Adams.RepositoryService.Models
 {
     public class ProjectInfo
     {
