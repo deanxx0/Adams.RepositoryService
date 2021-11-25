@@ -6,6 +6,7 @@ using NAVIAIServices.RepositoryService;
 using NAVIAIServices.RepositoryService.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +32,15 @@ namespace Adams.RepositoryService.Server.Controllers
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var augmentation = projectService.Augmentations.Find(x => x.IsEnabled == true).ToList();
+            return Ok(augmentation);
+        }
+
+        [HttpGet("projects/{projectId}/augmentations/{augmentationId}")]
+        public ActionResult GetAugmentation(string projectId, string augmentationId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var augmentation = projectService.Augmentations.Find(x => x.IsEnabled == true && x.Id == augmentationId).FirstOrDefault();
             return Ok(augmentation);
         }
 

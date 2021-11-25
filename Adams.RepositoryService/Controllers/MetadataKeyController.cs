@@ -7,6 +7,7 @@ using NAVIAIServices.RepositoryService.Entities;
 using NAVIAIServices.RepositoryService.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,15 @@ namespace Adams.RepositoryService.Server.Controllers
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var metadataKeys = projectService.MetadataKeys.Find(x => x.IsEnabled == true).ToList();
             return Ok(metadataKeys);
+        }
+
+        [HttpGet("projects/{projectId}/metadatakeys/{metadataKeyId}")]
+        public ActionResult GetMetadataKey(string projectId, string metadataKeyId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var metadataKey = projectService.MetadataKeys.Find(x => x.IsEnabled == true && x.Id == metadataKeyId).FirstOrDefault();
+            return Ok(metadataKey);
         }
 
         [HttpPost("projects/{projectId}/metadatakeys")]

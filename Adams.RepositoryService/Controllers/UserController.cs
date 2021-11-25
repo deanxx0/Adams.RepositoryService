@@ -21,6 +21,7 @@ namespace Adams.RepositoryService.Server.Controllers
             _appDbContext = appDbContext;
         }
 
+        [AllowAnonymous]
         [HttpPost("users")]
         public ActionResult CreateUser(CreateUser createUser)
         {
@@ -37,6 +38,7 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpGet("users")]
         public ActionResult<List<User>> GetAllUser()
         {
@@ -44,6 +46,7 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(users);
         }
 
+        [AllowAnonymous]
         [HttpGet("users/{username}")]
         public ActionResult GetUser(string username)
         {

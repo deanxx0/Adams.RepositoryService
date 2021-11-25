@@ -6,6 +6,7 @@ using NAVIAIServices.RepositoryService;
 using NAVIAIServices.RepositoryService.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +32,15 @@ namespace Adams.RepositoryService.Server.Controllers
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var classInfo = projectService.ClassInfos.Find(x => x.IsEnabled == true).ToList();
+            return Ok(classInfo);
+        }
+
+        [HttpGet("projects/{projectId}/classinfos/{classInfoId}")]
+        public ActionResult GetClassInfo(string projectId, string classInfoId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var classInfo = projectService.ClassInfos.Find(x => x.IsEnabled == true && x.Id == classInfoId).FirstOrDefault();
             return Ok(classInfo);
         }
 
