@@ -25,6 +25,14 @@ namespace Adams.RepositoryService.Server.Controllers
         [HttpPost("users")]
         public ActionResult CreateUser(CreateUser createUser)
         {
+            if (
+                createUser.UserClaim != ClaimNames.Member &&
+                createUser.UserClaim != ClaimNames.Admin
+                )
+            {
+                return BadRequest($"User Claim should be {ClaimNames.Member} or {ClaimNames.Admin}");
+            }
+
             var hasher = new PasswordHasher<string>();
             var hashedStr = hasher.HashPassword(createUser.UserName, createUser.Password);
 
