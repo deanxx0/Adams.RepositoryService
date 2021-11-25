@@ -44,6 +44,7 @@ namespace Adams.RepositoryService.Server.Controllers
             if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var metadataKey = projectService.MetadataKeys.Find(x => x.IsEnabled == true && x.Id == metadataKeyId).FirstOrDefault();
+            if (metadataKey == null) return BadRequest($"Not valid configurationId {metadataKeyId}");
             return Ok(metadataKey);
         }
 
@@ -81,8 +82,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var metadatakey = projectService.MetadataKeys.Find(x => x.Id == metadatakeyId).FirstOrDefault();
-            if (metadatakey == null)
-                throw new Exception();
+            if (metadatakey == null) return BadRequest($"Not valid configurationId {metadatakeyId}");
 
             metadatakey.SetValue("isenabled", false);
 

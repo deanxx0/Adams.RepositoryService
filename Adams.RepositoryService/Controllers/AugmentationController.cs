@@ -43,6 +43,7 @@ namespace Adams.RepositoryService.Server.Controllers
             if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var augmentation = projectService.Augmentations.Find(x => x.IsEnabled == true && x.Id == augmentationId).FirstOrDefault();
+            if (augmentation == null) return BadRequest($"Not valid configurationId {augmentationId}");
             return Ok(augmentation);
         }
 
@@ -87,8 +88,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var augmentation = projectService.Augmentations.Find(x => x.Id == augmentationId).FirstOrDefault();
-            if (augmentation == null)
-                throw new Exception();
+            if (augmentation == null) return BadRequest($"Not valid configurationId {augmentationId}");
 
             augmentation.SetValue("isenabled", false);
 

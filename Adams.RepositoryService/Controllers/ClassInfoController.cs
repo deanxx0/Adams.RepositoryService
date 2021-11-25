@@ -43,6 +43,7 @@ namespace Adams.RepositoryService.Server.Controllers
             if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var classInfo = projectService.ClassInfos.Find(x => x.IsEnabled == true && x.Id == classInfoId).FirstOrDefault();
+            if (classInfo == null) return BadRequest($"Not valid configurationId {classInfoId}");
             return Ok(classInfo);
         }
 
@@ -72,8 +73,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var classInfo = projectService.ClassInfos.Find(x => x.Id == classInfoId).FirstOrDefault();
-            if (classInfo == null)
-                throw new Exception();
+            if (classInfo == null) return BadRequest($"Not valid configurationId {classInfoId}");
 
             classInfo.SetValue("isenabled", false);
 

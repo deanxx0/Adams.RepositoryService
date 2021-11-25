@@ -43,6 +43,7 @@ namespace Adams.RepositoryService.Server.Controllers
             if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var channel = projectService.InputChannels.Find(x => x.IsEnabled == true && x.Id == channelId).FirstOrDefault();
+            if (channel == null) return BadRequest($"Not valid configurationId {channelId}");
             return Ok(channel);
         }
 
@@ -71,8 +72,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var channel = projectService.InputChannels.Find(x => x.Id == channelId).FirstOrDefault();
-            if (channel == null)
-                throw new Exception();
+            if (channel == null) return BadRequest($"Not valid configurationId {channelId}");
 
             channel.SetValue("isenabled", false);
 
