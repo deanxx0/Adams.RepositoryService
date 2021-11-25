@@ -6,4 +6,8 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Adams.RepositoryService.Client\Adams.RepositoryService.Client.csproj" />
+  </ItemGroup>
+
 </Project>
