@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NAVIAIServices.RepositoryService;
 using NAVIAIServices.RepositoryService.Entities;
+using NAVIAIServices.RepositoryService.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,22 +37,36 @@ namespace Adams.RepositoryService.Server.Controllers
         }
 
         [HttpGet("projects/{id}")]
-        public ActionResult<Project> GetProject(string id)
+        public ActionResult GetProject(string id)
         {
-            var dbpath = _appDbContext.ProjectInfos.Where(x => x.EntityId == id)
-                                                    .FirstOrDefault()
-                                                    .DbPath;
-
+            var projectInfo = _appDbContext.ProjectInfos.Where(x => x.EntityId == id).FirstOrDefault();
+            if (projectInfo == null) return BadRequest($"Not valid id {id}");
+            var dbpath = projectInfo.DbPath;
             var project = _repositoryService.GetProjectService(dbpath, DBType.LiteDB);
             var entity = project.Entity;
-            return entity;
+            return Ok(entity);
         }
 
         [HttpPost("projects")]
         public ActionResult CreateProject([FromBody] CreateProject createProject)
         {
+            NAVIAITypes aiType = default;
+            bool isChecked = false;
+            foreach(NAVIAITypes type in Enum.GetValues(typeof(NAVIAITypes)))
+            {
+                if (createProject.AIType.ToLower() == type.ToString().ToLower())
+                {
+                    aiType = type;
+                    isChecked = true;
+                    break;
+                }
+            }
+
+            if(!isChecked)
+                return BadRequest("AIType should be 'Mercury' or 'Mars' or 'Venus'");
+
             var entity = new Project(
-                createProject.AIType,
+                aiType,
                 createProject.Name,
                 createProject.Description
                 );

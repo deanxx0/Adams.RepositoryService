@@ -11,9 +11,10 @@ namespace Adams.RespositoryService.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public NAVIAITypes AIType { get; set; }
 
-        public CreateProject(string name, string description, NAVIAITypes aitype)
+        public string AIType { get; set; }
+
+        public CreateProject(string name, string description, string aitype)
         {
             this.Name = name;
             this.Description = description;

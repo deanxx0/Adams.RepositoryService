@@ -30,6 +30,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetProjectInfo(string id)
         {
             var projectInfo = _appDbContext.ProjectInfos.AsQueryable().Where(x => x.Id == id).FirstOrDefault();
+            if (projectInfo == null) return BadRequest($"Not valid id {id}");
             return Ok(projectInfo);
         }
     }
