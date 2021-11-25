@@ -30,6 +30,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetAllAugmentation(string projectId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var augmentation = projectService.Augmentations.Find(x => x.IsEnabled == true).ToList();
             return Ok(augmentation);
@@ -39,6 +40,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetAugmentation(string projectId, string augmentationId)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var augmentation = projectService.Augmentations.Find(x => x.IsEnabled == true && x.Id == augmentationId).FirstOrDefault();
             return Ok(augmentation);
@@ -71,6 +73,7 @@ namespace Adams.RepositoryService.Server.Controllers
                 createAugmentation.RandomCount
                 );
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             projectService.Augmentations.Add(entity);
             return Ok(entity);
@@ -80,6 +83,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult DeleteAugmentation(string projectId, string augmentationId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var augmentation = projectService.Augmentations.Find(x => x.Id == augmentationId).FirstOrDefault();

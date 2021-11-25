@@ -30,6 +30,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetAllChannels(string projectId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var channels = projectService.InputChannels.Find(x => x.IsEnabled == true).ToList();
             return Ok(channels);
@@ -39,6 +40,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetChannel(string projectId, string channelId)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var channel = projectService.InputChannels.Find(x => x.IsEnabled == true && x.Id == channelId).FirstOrDefault();
             return Ok(channel);
@@ -55,6 +57,7 @@ namespace Adams.RepositoryService.Server.Controllers
                 true
                 );
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             projectService.InputChannels.Add(entity);
             return Ok(entity);
@@ -64,6 +67,7 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult DeleteChannel(string projectId, string channelId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var channel = projectService.InputChannels.Find(x => x.Id == channelId).FirstOrDefault();
