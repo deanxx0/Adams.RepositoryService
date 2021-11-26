@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Adams.RepositoryService.Client.Clients
 {
-    class InputChannelClient : IInputChannelClient
+    internal class InputChannelClient : IInputChannelClient
     {
         private readonly HttpRequester<InputChannel> _httpRequester;
         public InputChannelClient(string projectId, HttpClient httpClient)

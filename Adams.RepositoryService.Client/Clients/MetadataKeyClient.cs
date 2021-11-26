@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Adams.RepositoryService.Client.Clients
 {
-    class MetadataKeyClient : IMetadataKeyClient
+    internal class MetadataKeyClient : IMetadataKeyClient
     {
         private readonly HttpRequester<MetadataKey> _httpRequester;
 

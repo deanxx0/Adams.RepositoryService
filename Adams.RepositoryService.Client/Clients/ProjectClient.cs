@@ -21,6 +21,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public IClassInfoClient ClassInfos => new ClassInfoClient(_projectId, _httpClient);
         public IInputChannelClient InputChannels => new InputChannelClient(_projectId, _httpClient);
-        public IMetadataKeyClient MetadataKeys => new MetadataKeyClient(_projectId, _httpClient);        
+        public IMetadataKeyClient MetadataKeys => new MetadataKeyClient(_projectId, _httpClient);
+        public ITrainConfigurationClient TrainConfigurations => new TrainConfigurationClient(_projectId, _httpClient);
     }
 }
