@@ -10,5 +10,6 @@ namespace Adams.RepositoryService.Client.Interfaces
     {
         IClassInfoClient ClassInfos { get; }
         IInputChannelClient InputChannels { get; }
+        IMetadataKeyClient MetadataKeys { get; }
     }
 }
