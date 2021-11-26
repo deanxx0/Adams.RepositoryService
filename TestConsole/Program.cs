@@ -29,6 +29,25 @@ namespace TestConsole
             //var classInfo = projectClient.ClassInfos.Get(createClassInfoResult.Id);
             //var deleteClassInfo = projectClient.ClassInfos.Delete("2fc9334a-bcce-495e-be66-cd62e3e51e37");
 
+            // input channel
+            //var createModel = new CreateInputChannel("test1", true, "seesete", "rere");
+            //var createRes = projectClient.InputChannels.Create(createModel);
+            //var createModel2 = new CreateInputChannel("test2", true, "qweqete", "xvvx");
+            //var createRes2 = projectClient.InputChannels.Create(createModel2);
+            //var getallRes = projectClient.InputChannels.GetAll();
+            //var getRes = projectClient.InputChannels.Get(createRes2.Id);
+            //var delRes = projectClient.InputChannels.Delete(createRes2.Id);
+            //var getallRes2 = projectClient.InputChannels.GetAll();
+
+            // meta key
+            var createModel = new CreateMetadataKey("test1", "dfaf", "string");
+            var createRes = projectClient.MetadataKeys.Create(createModel);
+            var createModel2 = new CreateMetadataKey("test2", "dfaf", "boolean");
+            var createRes2 = projectClient.MetadataKeys.Create(createModel2);
+            var getallRes = projectClient.MetadataKeys.GetAll();
+            var getRes = projectClient.MetadataKeys.Get(createRes2.Id);
+            var delRes = projectClient.MetadataKeys.Delete(createRes2.Id);
+            var getallRes2 = projectClient.MetadataKeys.GetAll();
 
         }
     }
