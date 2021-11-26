@@ -12,5 +12,6 @@ namespace Adams.RepositoryService.Client.Interfaces
         IInputChannelClient InputChannels { get; }
         IMetadataKeyClient MetadataKeys { get; }
         ITrainConfigurationClient TrainConfigurations { get; }
+        IAugmentationClient Augmentations { get; }
     }
 }
