@@ -24,13 +24,12 @@ namespace Adams.RepositoryService.Client.Utils
 
         private string TypeToUrl()
         {
-            if (typeof(T) == typeof(ClassInfo))
-                return "classinfos";
-            else if (typeof(T) == typeof(InputChannel))
-                return "channels";
-
-            else
-                throw new Exception();
+            if (typeof(T) == typeof(ClassInfo)) return "classinfos";
+            else if (typeof(T) == typeof(InputChannel)) return "channels";
+            else if (typeof(T) == typeof(MetadataKey)) return "metadatakeys";
+            else if (typeof(T) == typeof(TrainConfiguration)) return "configurations";
+            else if (typeof(T) == typeof(Augmentation)) return "augmentations";
+            else throw new Exception("HttpRequester Type To Url method fail");
         }
 
         internal async Task<T> PostAsync(object createModel)
