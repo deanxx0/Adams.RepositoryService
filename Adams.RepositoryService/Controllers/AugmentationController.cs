@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NAVIAIServices.RepositoryService;
 using NAVIAIServices.RepositoryService.Entities;
+using NAVIAIServices.RepositoryService.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,6 +51,16 @@ namespace Adams.RepositoryService.Server.Controllers
         [HttpPost("projects/{projectId}/augmentations")]
         public ActionResult CreateAugmentation(string projectId, [FromBody] CreateAugmentation createAugmentation)
         {
+            BorderModes borderMode = default;
+            try
+            {
+                borderMode = Convert(createAugmentation.BorderMode);
+            }
+            catch
+            {
+                return BadRequest($"invalid type {createAugmentation.BorderMode}");
+            }
+
             var entity = new Augmentation(
                 createAugmentation.Name,
                 createAugmentation.Description,
@@ -60,7 +71,7 @@ namespace Adams.RepositoryService.Server.Controllers
                 createAugmentation.Shift,
                 createAugmentation.Tilt,
                 createAugmentation.Rotation,
-                createAugmentation.BorderMode,
+                borderMode,
                 createAugmentation.Contrast,
                 createAugmentation.Brightness,
                 createAugmentation.Shade,
@@ -95,6 +106,15 @@ namespace Adams.RepositoryService.Server.Controllers
             projectService.Augmentations.Update(augmentation);
 
             return Ok(augmentation);
+        }
+
+        private BorderModes Convert(string borderModeStr)
+        {
+            foreach (BorderModes mode in Enum.GetValues(typeof(BorderModes)))
+            {
+                if (mode.ToString().ToLower() == borderModeStr.ToLower()) return mode;
+            }
+            throw new Exception("BorderMode convert fail");
         }
     }
 }

@@ -98,9 +98,7 @@ namespace Adams.RepositoryService.Server.Controllers
                 if (type.ToString().ToLower() == typeStr.ToLower())
                     return type;
             }
-
             throw new Exception("MetadataType convert fail");
-
         }
     }
 }
