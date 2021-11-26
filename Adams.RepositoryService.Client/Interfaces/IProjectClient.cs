@@ -9,5 +9,6 @@ namespace Adams.RepositoryService.Client.Interfaces
     public interface IProjectClient
     {
         IClassInfoClient ClassInfos { get; }
+        IInputChannelClient InputChannels { get; }
     }
 }
