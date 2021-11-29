@@ -71,7 +71,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
             if (item == null) return BadRequest($"Not valid itemId {itemId}");
 
-            var metadataValues = projectService.MetadataValues.Find(x => x.isEnabled == true).FirstOrDefault();
+            var metadataValues = projectService.MetadataValues.Find(x => x.IsEnabled == true).ToList();
             return Ok(metadataValues);
         }
 
@@ -85,7 +85,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
             if (item == null) return BadRequest($"Not valid itemId {itemId}");
 
-            var metadataValue = projectService.MetadataValues.Find(x => x.isEnabled == true && x.Id == metadataValueId).FirstOrDefault();
+            var metadataValue = projectService.MetadataValues.Find(x => x.IsEnabled == true && x.Id == metadataValueId).FirstOrDefault();
             if (metadataValue == null) return BadRequest($"Not valid metadataValue {metadataValueId}");
             return Ok(metadataValue);
         }
@@ -100,7 +100,7 @@ namespace Adams.RepositoryService.Server.Controllers
             var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
             if (item == null) return BadRequest($"Not valid itemId {itemId}");
 
-            var metadataValue = projectService.MetadataValues.Find(x => x.isEnabled == true && x.Id == metadataValueId).FirstOrDefault();
+            var metadataValue = projectService.MetadataValues.Find(x => x.IsEnabled == true && x.Id == metadataValueId).FirstOrDefault();
             if (metadataValue == null) return BadRequest($"Not valid metadataValue {metadataValueId}");
 
             metadataValue.SetValue("isenabled", false);
@@ -114,8 +114,7 @@ namespace Adams.RepositoryService.Server.Controllers
             {
                 if (type.ToString().ToLower() == typeStr.ToLower())
                 {
-                    if (type.ToString().ToLower() == typeStr.ToLower())
-                        return type;
+                    return type;
                 }
             }
             throw new Exception();
