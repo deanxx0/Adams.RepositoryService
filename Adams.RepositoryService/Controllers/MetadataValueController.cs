@@ -39,9 +39,9 @@ namespace Adams.RepositoryService.Server.Controllers
             // key check
             var key = projectService.MetadataKeys.Find(x => x.IsEnabled == true && x.Id == createMetadataValue.KeyId).FirstOrDefault();
             if (key == null) return BadRequest($"Not valid configurationId {createMetadataValue.KeyId}");
-
+            
             // type convert
-            MetadataTypes type = MetadataTypes.Boolean;
+            MetadataTypes type = MetadataTypes.Number;
             try
             {
                 type = convert(createMetadataValue.Type);
@@ -51,12 +51,42 @@ namespace Adams.RepositoryService.Server.Controllers
                 return BadRequest($"invalid type {createMetadataValue.Type}");
             }
 
+            if (key.Type != type)
+                return BadRequest("key type and value type are not matched");
+
+            // value convert
+            object value = null;
+            try
+            {
+                switch (type)
+                {
+                    case MetadataTypes.String:
+                        value = createMetadataValue.Value;
+                        break;
+                    case MetadataTypes.Number:
+                        value = double.Parse(createMetadataValue.Value);
+                        break;
+                    case MetadataTypes.Boolean:
+                        value = bool.Parse(createMetadataValue.Value);
+                        break;
+                    case MetadataTypes.DateTime:
+                        value = DateTime.Parse(createMetadataValue.Value);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest($"Not matched type with value Type: {type} / Value: {createMetadataValue.Value}");
+            }
+
             var entity = new MetadataValue(
-                itemId,
-                createMetadataValue.KeyId,
-                type,
-                createMetadataValue.Value
-                );
+                                    itemId,
+                                    createMetadataValue.KeyId,
+                                    type,
+                                    value
+                                    );
             projectService.MetadataValues.Add(entity);
             return Ok(entity);
         }

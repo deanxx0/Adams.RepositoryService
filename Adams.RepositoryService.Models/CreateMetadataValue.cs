@@ -14,9 +14,9 @@ namespace Adams.RepositoryService.Models
         [Required]
         public string Type { get; set; }
         [Required]
-        public object Value { get; set; }
+        public string Value { get; set; }
 
-        public CreateMetadataValue(string keyId, string type, object value)
+        public CreateMetadataValue(string keyId, string type, string value)
         {
             KeyId = keyId;
             Type = type;
