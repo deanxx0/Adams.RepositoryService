@@ -81,7 +81,7 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(imageInfo);
         }
 
-        [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/{imageInfoId")]
+        [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/{imageInfoId}")]
         public ActionResult GetImageInfo(string projectId, string itemId, string imageInfoId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
@@ -96,7 +96,7 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(imageInfo);
         }
 
-        [HttpDelete("projects/{projectId}/items/{itemId}/imageinfos/{imageInfoId")]
+        [HttpDelete("projects/{projectId}/items/{itemId}/imageinfos/{imageInfoId}")]
         public ActionResult DeleteImageInfo(string projectId, string itemId, string imageInfoId)
         {
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
