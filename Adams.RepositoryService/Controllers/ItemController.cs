@@ -30,8 +30,9 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult CreateItem(string projectId, [FromBody] CreateItem createItem)
         {
             var entity = new Item(createItem.Tag);
-            var dbPath = ConfigurationPath.Combine(_projectDbRoot, projectId + ".db");
-            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (System.IO.File.Exists(dbPath) is false)
+                return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             projectService.Items.Add(entity);
             return Ok(entity);
@@ -40,8 +41,9 @@ namespace Adams.RepositoryService.Server.Controllers
         [HttpGet("projects/{projectId}/items")]
         public ActionResult GetAllItem(string projectId)
         {
-            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
-            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var items = projectService.Items.Find(x => x.IsEnabled == true).ToList();
             return Ok(items);
@@ -51,22 +53,26 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult GetItem(string projectId, string itemId)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
-            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
-            if (item == null) return BadRequest($"Not valid itemId {itemId}");
+            if (item == null)
+                return BadRequest($"Not valid itemId {itemId}");
             return Ok(item);
         }
 
         [HttpDelete("projects/{projectId}/items/{itemId}")]
         public ActionResult DeleteItem(string projectId, string itemId)
         {
-            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
-            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
 
             var item = projectService.Items.Find(x => x.Id == itemId).FirstOrDefault();
-            if (item == null) return BadRequest($"Not valid itemId {itemId}");
+            if (item == null)
+                return BadRequest($"Not valid itemId {itemId}");
 
             item.SetValue("isenabled", false);
 
