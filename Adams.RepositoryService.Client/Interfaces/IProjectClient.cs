@@ -13,5 +13,6 @@ namespace Adams.RepositoryService.Client.Interfaces
         IMetadataKeyClient MetadataKeys { get; }
         ITrainConfigurationClient TrainConfigurations { get; }
         IAugmentationClient Augmentations { get; }
+        IDatasetClient Datasets { get; }
     }
 }

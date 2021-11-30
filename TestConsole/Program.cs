@@ -11,7 +11,7 @@ namespace TestConsole
         {
             var adamsClient = AdamsClientFactory.Create("http://localhost:5005");
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
-            var projectClient = adamsClient.CreateProjectClient("e020ed9f-0b26-4264-b63a-d26764a42ccd");
+            var projectClient = adamsClient.CreateProjectClient("0960eb1b-a959-4854-b2df-8b244079d497");
 
             // project
             //var createproject = new CreateProject("pppp1", "descdesc", "Mercury");
