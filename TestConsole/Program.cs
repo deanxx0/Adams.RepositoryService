@@ -13,6 +13,17 @@ namespace TestConsole
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
             var projectClient = adamsClient.CreateProjectClient("0960eb1b-a959-4854-b2df-8b244079d497");
 
+            // dataset
+            var dto1 = new CreateDataset("dd1", "ddd", "testing");
+            var createDataset1 = projectClient.Datasets.Create(dto1);
+            var dto2 = new CreateDataset("dd2", "ddd", "testing");
+            var createDataset2 = projectClient.Datasets.Create(dto2);
+            var allDataset = projectClient.Datasets.GetAll();
+            var dataset = projectClient.Datasets.Get(createDataset1.Id);
+            var deleteDataset = projectClient.Datasets.Delete(createDataset2.Id);
+            var allDataset2 = projectClient.Datasets.GetAll();
+            Console.WriteLine("end");
+
             // project
             //var createproject = new CreateProject("pppp1", "descdesc", "Mercury");
             //var createprojectresult = adamsClient.CreateProjectAsync(createproject).Result;

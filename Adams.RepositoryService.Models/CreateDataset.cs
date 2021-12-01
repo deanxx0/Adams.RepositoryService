@@ -16,6 +16,12 @@ namespace Adams.RepositoryService.Models
         [Required]
         public string Type { get; set; }
 
+        public CreateDataset(string name, string description, string type)
+        {
+            Name = name;
+            Description = description;
+            Type = type;
+        }
         public CreateDataset()
         {
 
