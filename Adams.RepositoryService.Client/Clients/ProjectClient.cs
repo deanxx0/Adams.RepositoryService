@@ -25,5 +25,6 @@ namespace Adams.RepositoryService.Client.Clients
         public ITrainConfigurationClient TrainConfigurations => new TrainConfigurationClient(_projectId, _httpClient);
         public IAugmentationClient Augmentations => new AugmentationClient(_projectId, _httpClient);
         public IDatasetClient Datasets => new DatasetClient(_projectId, _httpClient);
+        public IItemClient Items => new ItemClient(_projectId, _httpClient);
     }
 }

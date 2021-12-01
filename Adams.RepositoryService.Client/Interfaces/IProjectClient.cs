@@ -14,5 +14,6 @@ namespace Adams.RepositoryService.Client.Interfaces
         ITrainConfigurationClient TrainConfigurations { get; }
         IAugmentationClient Augmentations { get; }
         IDatasetClient Datasets { get; }
+        IItemClient Items { get; }
     }
 }

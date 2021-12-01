@@ -13,16 +13,26 @@ namespace TestConsole
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
             var projectClient = adamsClient.CreateProjectClient("0960eb1b-a959-4854-b2df-8b244079d497");
 
-            // dataset
-            var dto1 = new CreateDataset("dd1", "ddd", "testing");
-            var createDataset1 = projectClient.Datasets.Create(dto1);
-            var dto2 = new CreateDataset("dd2", "ddd", "testing");
-            var createDataset2 = projectClient.Datasets.Create(dto2);
-            var allDataset = projectClient.Datasets.GetAll();
-            var dataset = projectClient.Datasets.Get(createDataset1.Id);
-            var deleteDataset = projectClient.Datasets.Delete(createDataset2.Id);
-            var allDataset2 = projectClient.Datasets.GetAll();
+            //item
+            var i1 = new CreateItem("i1");
+            var createItem1 = projectClient.Items.Create(i1);
+            var i2 = new CreateItem("i2");
+            var createItem2 = projectClient.Items.Create(i2);
+            var allItems = projectClient.Items.GetAll();
+            var item = projectClient.Items.Get(createItem1.Id);
+            var deleteItem = projectClient.Items.Delete(createItem2.Id);
+            var allItems2 = projectClient.Items.GetAll();
+
             Console.WriteLine("end");
+            // dataset
+            //var dto1 = new CreateDataset("dd1", "ddd", "testing");
+            //var createDataset1 = projectClient.Datasets.Create(dto1);
+            //var dto2 = new CreateDataset("dd2", "ddd", "testing");
+            //var createDataset2 = projectClient.Datasets.Create(dto2);
+            //var allDataset = projectClient.Datasets.GetAll();
+            //var dataset = projectClient.Datasets.Get(createDataset1.Id);
+            //var deleteDataset = projectClient.Datasets.Delete(createDataset2.Id);
+            //var allDataset2 = projectClient.Datasets.GetAll();
 
             // project
             //var createproject = new CreateProject("pppp1", "descdesc", "Mercury");

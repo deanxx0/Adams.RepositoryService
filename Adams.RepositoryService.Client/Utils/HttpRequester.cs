@@ -30,6 +30,7 @@ namespace Adams.RepositoryService.Client.Utils
             else if (typeof(T) == typeof(TrainConfiguration)) return "configurations";
             else if (typeof(T) == typeof(Augmentation)) return "augmentations";
             else if (typeof(T) == typeof(Dataset)) return "datasets";
+            else if (typeof(T) == typeof(Item)) return "items";
             else throw new Exception("HttpRequester Type To Url method fail");
         }
 
