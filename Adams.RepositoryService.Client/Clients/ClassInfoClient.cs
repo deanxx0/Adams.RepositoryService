@@ -17,7 +17,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public ClassInfoClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<ClassInfo>(projectId, httpClient);
+            _httpRequester = new HttpRequester<ClassInfo>(httpClient, projectId);
         }
 
         public ClassInfo Create(CreateClassInfo createClassInfo)

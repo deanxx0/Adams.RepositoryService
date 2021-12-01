@@ -1,5 +1,7 @@
 ﻿using Adams.RepositoryService.Client.Interfaces;
-using Adams.RepositoryService.Client.Managers;
+using Adams.RepositoryService.Client.Utils;
+using Adams.RepositoryService.Models;
+using NAVIAIServices.RepositoryService.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +11,36 @@ using System.Threading.Tasks;
 
 namespace Adams.RepositoryService.Client.Clients
 {
-    internal class ProjectClient : IProjectClient
+    public class ProjectClient : IProjectClient
     {
-        private readonly string _projectId;
-        private readonly HttpClient _httpClient;
-
-        public ProjectClient(string projectId, HttpClient httpClient)
+        private readonly HttpRequester<Project> _httpRequester;
+        public ProjectClient(HttpClient httpClient)
         {
-            _projectId = projectId;
-            _httpClient = httpClient;
+            _httpRequester = new HttpRequester<Project>(httpClient);
         }
 
-        public IClassInfoClient ClassInfos => new ClassInfoClient(_projectId, _httpClient);
-        public IInputChannelClient InputChannels => new InputChannelClient(_projectId, _httpClient);
-        public IMetadataKeyClient MetadataKeys => new MetadataKeyClient(_projectId, _httpClient);
-        public ITrainConfigurationClient TrainConfigurations => new TrainConfigurationClient(_projectId, _httpClient);
-        public IAugmentationClient Augmentations => new AugmentationClient(_projectId, _httpClient);
-        public IDatasetClient Datasets => new DatasetClient(_projectId, _httpClient);
-        public IItemClient Items => new ItemClient(_projectId, _httpClient);
-        public IItemManager CreateItemManager(string itemId) => new ItemManager(_projectId, _httpClient, itemId);
+        public Project Create(CreateProject createProject)
+        {
+            var project = _httpRequester.PostAsync(createProject).Result;
+            return project;
+        }
+
+        public List<Project> GetAll()
+        {
+            var projects = _httpRequester.GetListAsync().Result;
+            return projects;
+        }
+
+        public Project Get(string projectId)
+        {
+            var project = _httpRequester.GetAsync(projectId).Result;
+            return project;
+        }
+
+        public Project Delete(string projectId)
+        {
+            var project = _httpRequester.DeleteAsync(projectId).Result;
+            return project;
+        }
     }
 }

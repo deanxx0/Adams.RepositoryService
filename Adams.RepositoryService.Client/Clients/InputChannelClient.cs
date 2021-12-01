@@ -16,7 +16,7 @@ namespace Adams.RepositoryService.Client.Clients
         private readonly HttpRequester<InputChannel> _httpRequester;
         public InputChannelClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<InputChannel>(projectId, httpClient);
+            _httpRequester = new HttpRequester<InputChannel>(httpClient, projectId);
         }
 
         public InputChannel Create(CreateInputChannel createInputChannel)

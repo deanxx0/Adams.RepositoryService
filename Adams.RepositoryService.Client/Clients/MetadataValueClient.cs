@@ -17,7 +17,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public MetadataValueClient(string projectId, HttpClient httpClient, string itemId)
         {
-            _httpRequester = new HttpRequester<MetadataValue>(projectId, httpClient, itemId);
+            _httpRequester = new HttpRequester<MetadataValue>(httpClient, projectId, itemId);
         }
 
         public MetadataValue Create(CreateMetadataValue createMetadataValue)

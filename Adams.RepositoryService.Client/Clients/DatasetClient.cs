@@ -17,7 +17,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public DatasetClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<Dataset>(projectId, httpClient);
+            _httpRequester = new HttpRequester<Dataset>(httpClient, projectId);
         }
 
         public Dataset Create(CreateDataset createDataset)

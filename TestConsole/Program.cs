@@ -12,7 +12,7 @@ namespace TestConsole
             var adamsClient = AdamsClientFactory.Create("http://localhost:5005");
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
 
-            var projectClient = adamsClient.CreateProjectClient("0960eb1b-a959-4854-b2df-8b244079d497");
+            var projectClient = adamsClient.CreateProjectManager("0960eb1b-a959-4854-b2df-8b244079d497");
             
             var itemManager = projectClient.CreateItemManager("04058f9f-8fe9-4957-894c-a667aedf4bca");
 

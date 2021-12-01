@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Adams.RepositoryService.Models;
+using NAVIAIServices.RepositoryService.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +10,9 @@ namespace Adams.RepositoryService.Client.Interfaces
 {
     public interface IProjectClient
     {
-        IClassInfoClient ClassInfos { get; }
-        IInputChannelClient InputChannels { get; }
-        IMetadataKeyClient MetadataKeys { get; }
-        ITrainConfigurationClient TrainConfigurations { get; }
-        IAugmentationClient Augmentations { get; }
-        IDatasetClient Datasets { get; }
-        IItemClient Items { get; }
-        IItemManager CreateItemManager(string itemId);
+        Project Create(CreateProject createProject);
+        List<Project> GetAll();
+        Project Get(string projectId);
+        Project Delete(string projectId);
     }
 }

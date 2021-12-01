@@ -16,7 +16,7 @@ namespace Adams.RepositoryService.Client.Clients
         private readonly HttpRequester<ImageInfo> _httpRequester;
         public ImageInfoClient(string projectId, HttpClient httpClient, string itemId)
         {
-            _httpRequester = new HttpRequester<ImageInfo>(projectId, httpClient, itemId);
+            _httpRequester = new HttpRequester<ImageInfo>(httpClient, projectId, itemId);
         }
 
         public ImageInfo Create(CreateImageInfo createImageInfo)

@@ -39,40 +39,44 @@ namespace Adams.RepositoryService.Client
             }
         }
 
-        public async Task<Project> CreateProjectAsync(CreateProject createProject)
-        {
-            using(var response = await _httpClient.PostAsJsonAsync($"/projects", createProject))
-            {
-                if (response.Content is object && response.Content.Headers.ContentType.MediaType == "application/json")
-                {
-                    var model = HttpContentJsonExtensions.ReadFromJsonAsync<Project>(response.Content).Result;
-                    return model;
-                }
-                else
-                {
-                    Console.WriteLine("HTTP Response was invalid and cannot be deserialised.");
-                }
-                return null;
-            }
-        }
+        public IProjectClient Projects => new ProjectClient(_httpClient);
 
-        public async Task<List<Project>> GetAllProjectAsync()
-        {
-            var projects = await _httpClient.GetFromJsonAsync<List<Project>>($"/projects");
-            return projects;
-        }
+        public IProjectManager CreateProjectManager(string projectId) => new ProjectManager(projectId, _httpClient);
 
-        public async Task<Project> GetProjectAsync(string projectId)
-        {
-            var project = await _httpClient.GetFromJsonAsync<Project>($"/projects/{projectId}");
-            return project;
-        }
+        //public async Task<Project> CreateProjectAsync(CreateProject createProject)
+        //{
+        //    using(var response = await _httpClient.PostAsJsonAsync($"/projects", createProject))
+        //    {
+        //        if (response.Content is object && response.Content.Headers.ContentType.MediaType == "application/json")
+        //        {
+        //            var model = HttpContentJsonExtensions.ReadFromJsonAsync<Project>(response.Content).Result;
+        //            return model;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("HTTP Response was invalid and cannot be deserialised.");
+        //        }
+        //        return null;
+        //    }
+        //}
 
-        public async Task<Project> DeleteProjectAsync(string projectId)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<List<Project>> GetAllProjectAsync()
+        //{
+        //    var projects = await _httpClient.GetFromJsonAsync<List<Project>>($"/projects");
+        //    return projects;
+        //}
 
-        public IProjectClient CreateProjectClient(string projectId) => new ProjectClient(projectId, _httpClient);
+        //public async Task<Project> GetProjectAsync(string projectId)
+        //{
+        //    var project = await _httpClient.GetFromJsonAsync<Project>($"/projects/{projectId}");
+        //    return project;
+        //}
+
+        //public async Task<Project> DeleteProjectAsync(string projectId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+
     }
 }

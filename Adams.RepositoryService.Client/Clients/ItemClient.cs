@@ -16,7 +16,7 @@ namespace Adams.RepositoryService.Client.Clients
         private readonly HttpRequester<Item> _httpRequester;
         public ItemClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<Item>(projectId, httpClient);
+            _httpRequester = new HttpRequester<Item>(httpClient, projectId);
         }
 
         public Item Create(CreateItem createItem)

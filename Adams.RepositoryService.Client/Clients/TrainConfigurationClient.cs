@@ -17,7 +17,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public TrainConfigurationClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<TrainConfiguration>(projectId, httpClient);
+            _httpRequester = new HttpRequester<TrainConfiguration>(httpClient, projectId);
         }
         public TrainConfiguration Create(CreateTrainConfiguration createTrainConfiguration)
         {

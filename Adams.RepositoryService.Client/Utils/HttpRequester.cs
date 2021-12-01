@@ -11,32 +11,44 @@ namespace Adams.RepositoryService.Client.Utils
 {
     class HttpRequester<T>
     {
-        string _projectId;
         HttpClient _httpClient;
-        string _targetUrl;
+        string _projectId;
+        bool _isProjectManger;
+        
         string _itemId;
-        bool _isItem;
+        bool _isItemManager;
+
+        string _targetUrl;
         string _fullUrl;
 
 
-        public HttpRequester(string projectId, HttpClient httpClient, string itemId = null)
+        public HttpRequester(HttpClient httpClient, string projectId = null, string itemId = null)
         {
-            _projectId = projectId;
             _httpClient = httpClient;
-            _targetUrl = TypeToUrl();
+
+            _projectId = projectId;
+            if (_projectId is not null) _isProjectManger = true;
+
             _itemId = itemId;
-            if (_itemId is not null) _isItem = true;
+            if (_itemId is not null) _isItemManager = true;
+
+            _targetUrl = TypeToUrl();
             _fullUrl = GetFullUrl();
         }
 
         private string GetFullUrl()
         {
-            if (_isItem == true)
+            if (_isProjectManger == true)
             {
-                return $"/projects/{_projectId}/items/{_itemId}/{_targetUrl}";
+                if (_isItemManager == true)
+                {
+                    return $"/projects/{_projectId}/items/{_itemId}/{_targetUrl}";
+                }
+
+                return $"/projects/{_projectId}/{_targetUrl}";
             }
 
-            return $"/projects/{_projectId}/{_targetUrl}";
+            return $"/projects";
         }
 
         private string TypeToUrl()
@@ -50,6 +62,7 @@ namespace Adams.RepositoryService.Client.Utils
             else if (typeof(T) == typeof(Item)) return "items";
             else if (typeof(T) == typeof(ImageInfo)) return "imageinfos";
             else if (typeof(T) == typeof(MetadataValue)) return "metadatavalues";
+            else if (typeof(T) == typeof(Project)) return null;
             else throw new Exception("HttpRequester Type To Url method fail");
         }
 

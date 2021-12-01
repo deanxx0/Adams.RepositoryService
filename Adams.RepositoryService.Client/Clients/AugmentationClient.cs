@@ -17,7 +17,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public AugmentationClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<Augmentation>(projectId, httpClient);
+            _httpRequester = new HttpRequester<Augmentation>(httpClient, projectId);
         }
 
         public Augmentation Create(CreateAugmentation createAugmentation)

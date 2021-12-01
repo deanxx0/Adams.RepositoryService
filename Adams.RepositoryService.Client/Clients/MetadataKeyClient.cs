@@ -17,7 +17,7 @@ namespace Adams.RepositoryService.Client.Clients
 
         public MetadataKeyClient(string projectId, HttpClient httpClient)
         {
-            _httpRequester = new HttpRequester<MetadataKey>(projectId, httpClient);
+            _httpRequester = new HttpRequester<MetadataKey>(httpClient, projectId);
         }
 
         public MetadataKey Create(CreateMetadataKey createMetadataKey)
