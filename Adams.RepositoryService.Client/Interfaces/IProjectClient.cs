@@ -15,5 +15,6 @@ namespace Adams.RepositoryService.Client.Interfaces
         IAugmentationClient Augmentations { get; }
         IDatasetClient Datasets { get; }
         IItemClient Items { get; }
+        IItemManager CreateItemManager(string itemId);
     }
 }

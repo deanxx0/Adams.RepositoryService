@@ -11,19 +11,33 @@ namespace TestConsole
         {
             var adamsClient = AdamsClientFactory.Create("http://localhost:5005");
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
+
             var projectClient = adamsClient.CreateProjectClient("0960eb1b-a959-4854-b2df-8b244079d497");
+            
+            var itemManager = projectClient.CreateItemManager("04058f9f-8fe9-4957-894c-a667aedf4bca");
+
+            // image info
+            var img1 = new CreateImageInfo("f4c279a1-3379-4108-8504-2dfbfd5052a0", "local", "none", "pathpathpath11");
+            var createImg = itemManager.ImageInfos.Create(img1);
+            var img2 = new CreateImageInfo("f4c279a1-3379-4108-8504-2dfbfd5052a0", "local", "none", "pathpathpath22");
+            var createImg2 = itemManager.ImageInfos.Create(img2);
+            var getAll = itemManager.ImageInfos.GetAll();
+            var get = itemManager.ImageInfos.Get(createImg2.Id);
+            var delete = itemManager.ImageInfos.Delete(createImg2.Id);
+            var getall2 = itemManager.ImageInfos.GetAll();
+            Console.WriteLine("end");
+
 
             //item
-            var i1 = new CreateItem("i1");
-            var createItem1 = projectClient.Items.Create(i1);
-            var i2 = new CreateItem("i2");
-            var createItem2 = projectClient.Items.Create(i2);
-            var allItems = projectClient.Items.GetAll();
-            var item = projectClient.Items.Get(createItem1.Id);
-            var deleteItem = projectClient.Items.Delete(createItem2.Id);
-            var allItems2 = projectClient.Items.GetAll();
+            //var i1 = new CreateItem("i1");
+            //var createItem1 = projectClient.Items.Create(i1);
+            //var i2 = new CreateItem("i2");
+            //var createItem2 = projectClient.Items.Create(i2);
+            //var allItems = projectClient.Items.GetAll();
+            //var item = projectClient.Items.Get(createItem1.Id);
+            //var deleteItem = projectClient.Items.Delete(createItem2.Id);
+            //var allItems2 = projectClient.Items.GetAll();
 
-            Console.WriteLine("end");
             // dataset
             //var dto1 = new CreateDataset("dd1", "ddd", "testing");
             //var createDataset1 = projectClient.Datasets.Create(dto1);

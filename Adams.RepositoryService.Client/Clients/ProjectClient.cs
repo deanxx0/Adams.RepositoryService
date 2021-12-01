@@ -1,4 +1,5 @@
 ﻿using Adams.RepositoryService.Client.Interfaces;
+using Adams.RepositoryService.Client.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,6 @@ namespace Adams.RepositoryService.Client.Clients
         public IAugmentationClient Augmentations => new AugmentationClient(_projectId, _httpClient);
         public IDatasetClient Datasets => new DatasetClient(_projectId, _httpClient);
         public IItemClient Items => new ItemClient(_projectId, _httpClient);
+        public IItemManager CreateItemManager(string itemId) => new ItemManager(_projectId, _httpClient, itemId);
     }
 }
