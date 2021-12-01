@@ -23,6 +23,6 @@ namespace Adams.RepositoryService.Client.Managers
         }
 
         public IImageInfoClient ImageInfos => new ImageInfoClient(_projectId, _httpClient, _itemId);
-        //public IMetadataValueClient MetadataValues => new MetadataValueClient(_projectId, _httpClient, _itemId);
+        public IMetadataValueClient MetadataValues => new MetadataValueClient(_projectId, _httpClient, _itemId);
     }
 }

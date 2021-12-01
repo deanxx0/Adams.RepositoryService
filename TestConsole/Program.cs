@@ -16,17 +16,25 @@ namespace TestConsole
             
             var itemManager = projectClient.CreateItemManager("04058f9f-8fe9-4957-894c-a667aedf4bca");
 
-            // image info
-            var img1 = new CreateImageInfo("f4c279a1-3379-4108-8504-2dfbfd5052a0", "local", "none", "pathpathpath11");
-            var createImg = itemManager.ImageInfos.Create(img1);
-            var img2 = new CreateImageInfo("f4c279a1-3379-4108-8504-2dfbfd5052a0", "local", "none", "pathpathpath22");
-            var createImg2 = itemManager.ImageInfos.Create(img2);
-            var getAll = itemManager.ImageInfos.GetAll();
-            var get = itemManager.ImageInfos.Get(createImg2.Id);
-            var delete = itemManager.ImageInfos.Delete(createImg2.Id);
-            var getall2 = itemManager.ImageInfos.GetAll();
-            Console.WriteLine("end");
+            // metadata value
+            //var v1 = new CreateMetadataValue("6af677d5-0ee8-4ed7-85c4-5514d1a597ac", "number", "566");
+            //var createv1 = itemManager.MetadataValues.Create(v1);
+            //var v2 = new CreateMetadataValue("555f7ac7-305a-4716-bf26-73d0927ffbd8", "string", "dfddddd");
+            //var createv2 = itemManager.MetadataValues.Create(v2);
+            //var getall = itemManager.MetadataValues.GetAll();
+            //var get = itemManager.MetadataValues.Get(createv1.Id);
+            //var del = itemManager.MetadataValues.Delete(createv1.Id);
+            //var getall2 = itemManager.MetadataValues.GetAll();
 
+            // image info
+            //var img1 = new CreateImageInfo("f4c279a1-3379-4108-8504-2dfbfd5052a0", "local", "none", "pathpathpath11");
+            //var createImg = itemManager.ImageInfos.Create(img1);
+            //var img2 = new CreateImageInfo("f4c279a1-3379-4108-8504-2dfbfd5052a0", "local", "none", "pathpathpath22");
+            //var createImg2 = itemManager.ImageInfos.Create(img2);
+            //var getAll = itemManager.ImageInfos.GetAll();
+            //var get = itemManager.ImageInfos.Get(createImg2.Id);
+            //var delete = itemManager.ImageInfos.Delete(createImg2.Id);
+            //var getall2 = itemManager.ImageInfos.GetAll();
 
             //item
             //var i1 = new CreateItem("i1");

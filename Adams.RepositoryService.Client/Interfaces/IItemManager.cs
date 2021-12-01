@@ -9,6 +9,6 @@ namespace Adams.RepositoryService.Client.Interfaces
     public interface IItemManager
     {
         IImageInfoClient ImageInfos { get; }
-        //IMetadataValue MetadataValues { get; }
+        IMetadataValueClient MetadataValues { get; }
     }
 }
