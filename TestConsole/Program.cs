@@ -12,9 +12,17 @@ namespace TestConsole
             var adamsClient = AdamsClientFactory.Create("http://localhost:5005");
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
 
-            var projectClient = adamsClient.CreateProjectManager("0960eb1b-a959-4854-b2df-8b244079d497");
+            // projects
+            var p1 = new CreateProject("pr111111", "dededededede", "mercury");
+            var createP1 = adamsClient.Projects.Create(p1);
+            var p2 = new CreateProject("pr222222", "kjkjkj", "mars");
+            var createP2 = adamsClient.Projects.Create(p2);
+            var getall = adamsClient.Projects.GetAll();
+            var get = adamsClient.Projects.Get(createP2.Id);
+            Console.WriteLine("");
+            //var project = adamsClient.CreateProjectManager("0960eb1b-a959-4854-b2df-8b244079d497");
             
-            var itemManager = projectClient.CreateItemManager("04058f9f-8fe9-4957-894c-a667aedf4bca");
+            //var itemManager = project.CreateItemManager("04058f9f-8fe9-4957-894c-a667aedf4bca");
 
             // metadata value
             //var v1 = new CreateMetadataValue("6af677d5-0ee8-4ed7-85c4-5514d1a597ac", "number", "566");
