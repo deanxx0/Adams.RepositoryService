@@ -9,7 +9,7 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var adamsClient = AdamsClientFactory.Create("http://localhost:5005");
+            var adamsClient = AdamsClientFactory.Create("http://10.10.1.112:5005");
             var loginResult = adamsClient.LoginAsync("u1", "123").Result;
 
             // projects
