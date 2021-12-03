@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Adams.RepositoryService.ClientV2\Adams.RepositoryService.ClientV2.csproj" />
+    <ProjectReference Include="..\..\naviai-services\NAVIAIServices.RepositoryService\NAVIAIServices.RepositoryService.csproj" />
   </ItemGroup>
 
 </Project>

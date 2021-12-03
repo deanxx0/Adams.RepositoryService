@@ -7,14 +7,14 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adams.RepositoryService.Client.Utils
+namespace Adams.RepositoryService.ClientV2
 {
-    class HttpRequester<T>
+    internal class HttpRequester<T>
     {
         HttpClient _httpClient;
         string _projectId;
         bool _isProjectManger;
-        
+
         string _itemId;
         bool _isItemManager;
 
@@ -88,8 +88,16 @@ namespace Adams.RepositoryService.Client.Utils
             var modelList = await _httpClient.GetFromJsonAsync<List<T>>(_fullUrl);
             return modelList;
         }
-
-
+        internal async Task<int> GetCountAsync()
+        {
+            var count = await _httpClient.GetFromJsonAsync<int>(_fullUrl + $"/count");
+            return count;
+        }
+        internal async Task<List<T>> GetListAsync(int page, int perPage)
+        {
+            var modelList = await _httpClient.GetFromJsonAsync<List<T>>(_fullUrl + $"/pages/{page}");
+            return modelList;
+        }
         internal async Task<T> GetAsync(string modelId)
         {
             var model = await _httpClient.GetFromJsonAsync<T>(_fullUrl + $"/{modelId}");

@@ -1,7 +1,4 @@
-﻿using Adams.RepositoryService.Client.Clients;
-using Adams.RepositoryService.Client.Interfaces;
-using Adams.RepositoryService.Models;
-using NAVIAIServices.RepositoryService.Entities;
+﻿using NAVIAIServices.RepositoryService.Entities;
 using NAVIAIServices.RepositoryService.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,23 +6,23 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adams.RepositoryService.Client
+namespace Adams.RepositoryService.ClientV2
 {
-    internal class AdamsClient : IAdamsClient
+    public class ProjectManager
     {
-        private readonly HttpClient _httpClient;
-
-        public AdamsClient(string baseUrl)
+        private HttpClient _httpClient = null;
+        public ProjectManager(string baseUrl, string username, string password)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(baseUrl);
+            if(!LoginAsync(username, password).Result)
+                throw new Exception("invalid user");
         }
 
-        public async Task<bool> LoginAsync(string username, string password)
+        async Task<bool> LoginAsync(string username, string password)
         {
             using (var response = await _httpClient.PostAsync($"/login/{username}/{password}", null))
             {
@@ -40,10 +37,20 @@ namespace Adams.RepositoryService.Client
             }
         }
 
-        public IProjectClient Projects => new ProjectClient(_httpClient);
+        public List<Project> FindAll()
+        {
+            return null;
+        }
 
-        public IProjectManager CreateProjectManager(string projectId) => new ProjectManager(projectId, _httpClient);
+        public Project Find(string projectId)
+        {
+            return null;
+        }
 
-        public IProjectService CreateProjectService(string projectId) => new ProjectService(projectId);
+
+        public IProjectService GetProjectService(string projectId)
+        {
+            return new ProjectService(projectId, _httpClient);
+        }
     }
 }

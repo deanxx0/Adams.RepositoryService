@@ -1,5 +1,4 @@
-﻿using Adams.RepositoryService.Client;
-using Adams.RepositoryService.Models;
+﻿using Adams.RepositoryService.ClientV2;
 using NAVIAIServices.RepositoryService.Enums;
 using System;
 
@@ -9,19 +8,32 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var adamsClient = AdamsClientFactory.Create("http://10.10.1.112:5005");
-            var loginResult = adamsClient.LoginAsync("u1", "123").Result;
+            ProjectManager manager = new ProjectManager("http://10.10.1.112:5005", "u1", "123");
 
-            // projects
-            var p1 = new CreateProject("pr111111", "dededededede", "mercury");
-            var createP1 = adamsClient.Projects.Create(p1);
-            var p2 = new CreateProject("pr222222", "kjkjkj", "mars");
-            var createP2 = adamsClient.Projects.Create(p2);
-            var getall = adamsClient.Projects.GetAll();
-            var get = adamsClient.Projects.Get(createP2.Id);
-            Console.WriteLine("");
+           var projectService =  manager.GetProjectService("0960eb1b-a959-4854-b2df-8b244079d497");
+
+            foreach(var item in projectService.Items.FindAll())
+            {
+
+            }
+            if (true)
+            {
+
+            }
+
+            //var adamsClient = AdamsClientFactory.Create("http://10.10.1.112:5005");
+            //var loginResult = adamsClient.LoginAsync("u1", "123").Result;
+
+            //// projects
+            //var p1 = new CreateProject("pr111111", "dededededede", "mercury");
+            //var createP1 = adamsClient.Projects.Create(p1);
+            //var p2 = new CreateProject("pr222222", "kjkjkj", "mars");
+            //var createP2 = adamsClient.Projects.Create(p2);
+            //var getall = adamsClient.Projects.GetAll();
+            //var get = adamsClient.Projects.Get(createP2.Id);
+            //Console.WriteLine("");
             //var project = adamsClient.CreateProjectManager("0960eb1b-a959-4854-b2df-8b244079d497");
-            
+
             //var itemManager = project.CreateItemManager("04058f9f-8fe9-4957-894c-a667aedf4bca");
 
             // metadata value

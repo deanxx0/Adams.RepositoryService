@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Adams.RepositoryService.Models\Adams.RepositoryService.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
