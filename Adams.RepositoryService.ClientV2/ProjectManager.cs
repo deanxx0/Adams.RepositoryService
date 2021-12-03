@@ -18,10 +18,23 @@ namespace Adams.RepositoryService.ClientV2
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(baseUrl);
-            if(!LoginAsync(username, password).Result)
+            if(!Login(username, password))
                 throw new Exception("invalid user");
         }
-
+        bool Login(string username, string password)
+        {
+            using (var response = _httpClient.PostAsync($"/login/{username}/{password}", null).Result)
+            {
+                if (HttpStatusCode.OK == response.StatusCode)
+                {
+                    string responseContent = response.Content.ReadAsStringAsync().Result;
+                    var token = responseContent;
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    return true;
+                }
+                return false;
+            }
+        }
         async Task<bool> LoginAsync(string username, string password)
         {
             using (var response = await _httpClient.PostAsync($"/login/{username}/{password}", null))
@@ -37,9 +50,10 @@ namespace Adams.RepositoryService.ClientV2
             }
         }
 
-        public List<Project> FindAll()
+        public async Task<List<Project>> FindAllAsync()
         {
-            return null;
+            var req = new HttpRequester<Project>(_httpClient);
+            return await req.GetListAsync();
         }
 
         public Project Find(string projectId)

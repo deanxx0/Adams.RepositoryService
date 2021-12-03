@@ -19,7 +19,7 @@ namespace Adams.RepositoryService.ClientV2.Services
         }
         public void Add(InputChannel entity)
         {
-            
+            throw new NotImplementedException();
         }
 
         public int Count()
