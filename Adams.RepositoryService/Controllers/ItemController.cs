@@ -38,19 +38,19 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(entity);
         }
 
-        [HttpGet("projects/{projectId}/items")]
-        public ActionResult GetAllItem(string projectId)
-        {
-            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
-            if (!System.IO.File.Exists(dbPath))
-                return BadRequest($"Not valid projectId {projectId}");
-            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
-            var items = projectService.Items.Find(x => x.IsEnabled == true).ToList();
-            return Ok(items);
-        }
+        //[HttpGet("projects/{projectId}/items")]
+        //public ActionResult GetAllItem(string projectId)
+        //{
+        //    var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+        //    if (!System.IO.File.Exists(dbPath))
+        //        return BadRequest($"Not valid projectId {projectId}");
+        //    var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+        //    var items = projectService.Items.Find(x => x.IsEnabled == true).ToList();
+        //    return Ok(items);
+        //}
 
         [HttpGet("projects/{projectId}/items/count")]
-        public ActionResult GetItems(string projectId)
+        public ActionResult GetItemCount(string projectId)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
             if (!System.IO.File.Exists(dbPath))
@@ -62,7 +62,7 @@ namespace Adams.RepositoryService.Server.Controllers
         }
 
         [HttpGet("projects/{projectId}/items/pages/{page}")]
-        public ActionResult GetItems(string projectId, int page)
+        public ActionResult GetItemPage(string projectId, int page)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
             if (!System.IO.File.Exists(dbPath))
@@ -102,6 +102,22 @@ namespace Adams.RepositoryService.Server.Controllers
 
             projectService.Items.Update(item);
             return Ok(item);
+        }
+
+        [HttpPut("projects/{projectId}/items/{itemId}")]
+        public ActionResult UpdateItem(string projectId, string itemId, [FromBody]Item itemIn)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var item = projectService.Items.Find(x => x.Id == itemId).FirstOrDefault();
+            if (item == null)
+                return BadRequest($"Not valid itemId {itemId}");
+
+            projectService.Items.Update(itemIn);
+            return Ok(itemIn);
         }
     }
 }

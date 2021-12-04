@@ -12,11 +12,11 @@ namespace Adams.RepositoryService.ClientV2
 {
     internal class ProjectService : IProjectService
     {
-        HttpClient _client;
+        HttpClient _httpClient;
         string _projectId;
-        public ProjectService(string projectId, HttpClient client)
+        public ProjectService(string projectId, HttpClient httpClient)
         {
-            _client = client;
+            _httpClient = httpClient;
             _projectId = projectId;
         }
         public bool IsMultiChannel => throw new NotImplementedException();
@@ -27,9 +27,9 @@ namespace Adams.RepositoryService.ClientV2
 
         public IDatasetService Datasets => throw new NotImplementedException();
 
-        public IInputChannelService InputChannels => new InputChannelService(_client);
+        public IInputChannelService InputChannels => new InputChannelService();
 
-        public IItemService Items => new ItemsService(_projectId, _client);
+        public IItemService Items => new ItemService(_projectId, _httpClient);
 
         public IMetadataValueService MetadataValues => throw new NotImplementedException();
 

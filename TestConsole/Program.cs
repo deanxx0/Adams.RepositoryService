@@ -1,4 +1,5 @@
 ﻿using Adams.RepositoryService.ClientV2;
+using NAVIAIServices.RepositoryService.Entities;
 using NAVIAIServices.RepositoryService.Enums;
 using System;
 
@@ -10,12 +11,22 @@ namespace TestConsole
         {
             ProjectManager manager = new ProjectManager("http://10.10.1.112:5005", "u1", "123");
 
-           var projectService =  manager.GetProjectService("0960eb1b-a959-4854-b2df-8b244079d497");
+            var projectService =  manager.GetProjectService("5795f553-4738-4e4e-8797-1b286563d858");
 
-            foreach(var item in projectService.Items.FindAll())
-            {
+            //foreach(var item in projectService.Items.FindAll())
+            //{
 
-            }
+            //}
+
+            //var item1 = new Item("newitem3");
+            //var item2 = new Item("newitem4");
+            //projectService.Items.Add(item1);
+            //projectService.Items.Add(item2);
+
+            var items = projectService.Items.Find((x => x.IsEnabled == true), 1, 30);
+            //var item3 = new Item("updateitem2");
+            //projectService.Items.Update(item3);
+
             if (true)
             {
 

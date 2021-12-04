@@ -14,12 +14,15 @@ namespace Adams.RepositoryService.ClientV2
     public class ProjectManager
     {
         private HttpClient _httpClient = null;
+        private readonly HttpRequester<Project> _httpRequester;
+
         public ProjectManager(string baseUrl, string username, string password)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(baseUrl);
             if(!Login(username, password))
                 throw new Exception("invalid user");
+            _httpRequester = new HttpRequester<Project>(_httpClient);
         }
         bool Login(string username, string password)
         {
@@ -56,9 +59,16 @@ namespace Adams.RepositoryService.ClientV2
             return await req.GetListAsync();
         }
 
+        public List<Project> FindAll()
+        {
+            var projects = _httpRequester.GetListAsync().Result;
+            return projects;
+        }
+
         public Project Find(string projectId)
         {
-            return null;
+            var project = _httpRequester.GetAsync(projectId).Result;
+            return project;
         }
 
 

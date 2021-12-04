@@ -12,10 +12,9 @@ namespace Adams.RepositoryService.ClientV2.Services
 {
     public class InputChannelService : IInputChannelService
     {
-        HttpClient _client;
-        public InputChannelService(HttpClient client)
+        public InputChannelService()
         {
-            _client = client;
+
         }
         public void Add(InputChannel entity)
         {

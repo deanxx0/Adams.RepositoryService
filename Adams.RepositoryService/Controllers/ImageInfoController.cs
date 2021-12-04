@@ -7,6 +7,7 @@ using NAVIAIServices.RepositoryService.Entities;
 using NAVIAIServices.RepositoryService.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -67,18 +68,46 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(entity);
         }
 
-        [HttpGet("projects/{projectId}/items/{itemId}/imageinfos")]
-        public ActionResult GetallImageInfo(string projectId, string itemId)
+        //[HttpGet("projects/{projectId}/items/{itemId}/imageinfos")]
+        //public ActionResult GetallImageInfo(string projectId, string itemId)
+        //{
+        //    var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+        //    if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+        //    var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+        //    //item check
+        //    var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
+        //    if (item is null) return BadRequest($"Not valid itemId {itemId}");
+
+        //    var imageInfo = projectService.ImageInfos.Find(x => x.IsEnabled == true).ToList();
+        //    return Ok(imageInfo);
+        //}
+
+        [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/count")]
+        public ActionResult GetImageInfoCount(string projectId, string itemId)
         {
-            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
-            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
-            //item check
             var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
             if (item is null) return BadRequest($"Not valid itemId {itemId}");
 
-            var imageInfo = projectService.ImageInfos.Find(x => x.IsEnabled == true).ToList();
-            return Ok(imageInfo);
+            var count = projectService.ImageInfos.Count();
+            return Ok(count);
+        }
+
+        [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/pages/{page}")]
+        public ActionResult GetImageInfoPage(string projectId, string itemId, int page)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
+            if (item is null) return BadRequest($"Not valid itemId {itemId}");
+
+            var imageInfos = projectService.ImageInfos.Find(x => x.IsEnabled == true, page - 1, 50).ToList();
+            return Ok(imageInfos);
         }
 
         [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/{imageInfoId}")]

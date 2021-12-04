@@ -120,5 +120,22 @@ namespace Adams.RepositoryService.ClientV2
                 return default(T);
             }
         }
+
+        internal async Task<T> UpdateAsync(object entity)
+        {
+            using (var response = await _httpClient.PutAsJsonAsync(_fullUrl, entity))
+            {
+                if (response.Content is object && response.Content.Headers.ContentType.MediaType == "application/json")
+                {
+                    var model = HttpContentJsonExtensions.ReadFromJsonAsync<T>(response.Content).Result;
+                    return model;
+                }
+                else
+                {
+                    Console.WriteLine("HTTP Response was invalid and cannot be deserialised.");
+                }
+                return default(T);
+            }
+        }
     }
 }
