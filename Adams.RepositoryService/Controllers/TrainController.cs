@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Adams.RepositoryService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NAVIAIServices.RepositoryService;
+using NAVIAIServices.RepositoryService.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,22 +47,42 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(train);
         }
 
-        //[HttpPost("projects/{projectId}/trains")]
-        //public ActionResult CreateTrain(string projectId, [FromBody] CreateClassInfo createClassInfo)
-        //{
-        //    var entity = new ClassInfo(
-        //        createClassInfo.Name,
-        //        createClassInfo.Description,
-        //        createClassInfo.R,
-        //        createClassInfo.G,
-        //        createClassInfo.B,
-        //        true
-        //        );
-        //    var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
-        //    if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
-        //    var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
-        //    projectService.ClassInfos.Add(entity);
-        //    return Ok(entity);
-        //}
+        [HttpPost("projects/{projectId}/trains")]
+        public ActionResult CreateTrain(string projectId, [FromBody] CreateTrain createTrain)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var configuration = projectService.TrainConfigurations.Find(x => x.IsEnabled == true && x.Id == createTrain.ConfigurationId).FirstOrDefault();
+            if (configuration == null) return BadRequest($"Not valid  {createTrain.ConfigurationId}");
+            var aug = projectService.Augmentations.Find(x => x.IsEnabled == true && x.Id == createTrain.AugmentationId).FirstOrDefault();
+            if (configuration == null) return BadRequest($"Not valid  {createTrain.AugmentationId}");
+
+            var entity = new Train(
+                createTrain.Name,
+                createTrain.Description,
+                configuration,
+                aug,
+                createTrain.TrainSetIdList,
+                createTrain.ValidationSetIdList
+                );
+            
+            projectService.Trains.Add(entity);
+            return Ok(entity);
+        }
+
+        [HttpPut("projects/{projectId}/trains")]
+        public ActionResult UpdateTrain(string projectId, [FromBody] Train train)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var entity = projectService.Trains.Find(x => x.Id == train.Id).FirstOrDefault();
+            if (entity == null) return BadRequest($"not valid configurationid {train.Id}");
+
+            projectService.Trains.Update(train);
+            return Ok(train);
+        }
     }
 }

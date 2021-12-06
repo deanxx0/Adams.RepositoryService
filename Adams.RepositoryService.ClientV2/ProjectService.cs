@@ -40,7 +40,7 @@ namespace Adams.RepositoryService.ClientV2
 
         public ITrainConfigurationService TrainConfigurations => new TrainConfigurationService(_httpClient, _projectId);
 
-        public ITrainService Trains => throw new NotImplementedException();
+        public ITrainService Trains => new TrainService(_httpClient, _projectId);
 
         public IAugmentationService Augmentations => new AugmentationService(_httpClient, _projectId);
 
