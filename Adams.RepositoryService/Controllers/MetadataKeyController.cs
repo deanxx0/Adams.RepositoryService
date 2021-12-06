@@ -37,6 +37,18 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(metadataKeys);
         }
 
+        [HttpGet("projects/{projectId}/metadatakeys/count")]
+        public ActionResult GetMetadataKeyCount(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var count = projectService.MetadataKeys.Count();
+            return Ok(count);
+        }
+
         [HttpGet("projects/{projectId}/metadatakeys/{metadataKeyId}")]
         public ActionResult GetMetadataKey(string projectId, string metadataKeyId)
         {

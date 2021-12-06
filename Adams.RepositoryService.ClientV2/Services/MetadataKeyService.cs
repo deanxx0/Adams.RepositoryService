@@ -38,7 +38,7 @@ namespace Adams.RepositoryService.ClientV2.Services
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return _httpClient.GetFromJsonAsync<int>($"projects/{_projectId}/metadatakeys/count").Result;
         }
 
         public IEnumerable<MetadataKey> Find(Expression<Func<MetadataKey, bool>> predicate)
