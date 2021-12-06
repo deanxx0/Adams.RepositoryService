@@ -2,6 +2,7 @@
 using NAVIAIServices.RepositoryService.Entities;
 using NAVIAIServices.RepositoryService.Enums;
 using System;
+using System.Linq;
 
 namespace TestConsole
 {
@@ -18,9 +19,7 @@ namespace TestConsole
 
             //}
 
-            //var item1 = new Item("newitem3");
-
-
+            //var item1 = new Item("hhhhhhhhhhhhhhhh");
             //var item2 = new Item("mmmmmmmmmmmmmm");
             // 내가 만든 item2의 Id는 aaa라면
 
@@ -30,7 +29,7 @@ namespace TestConsole
 
             var items = projectService.Items.Find((x => x.IsEnabled == true), 1, 30);
             var item = projectService.Items.Find((x => x.Id == "f96e8d6d-5ca5-4e99-b598-0f9d96a15024"), 1, 30);
-            
+            var itemlist = item.ToList();
             
 
             if (true)

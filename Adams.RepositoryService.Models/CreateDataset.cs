@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAVIAIServices.RepositoryService.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,12 +12,11 @@ namespace Adams.RepositoryService.Models
     {
         [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
         [Required]
-        public string Type { get; set; }
+        public DatasetTypes Type { get; set; }
 
-        public CreateDataset(string name, string description, string type)
+        public CreateDataset(string name, string description, DatasetTypes type)
         {
             Name = name;
             Description = description;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,43 +15,44 @@ namespace Adams.RepositoryService.ClientV2
     {
         HttpClient _httpClient;
         string _projectId;
-        public ProjectService(string projectId, HttpClient httpClient)
+        public ProjectService(HttpClient httpClient, string projectId)
         {
             _httpClient = httpClient;
             _projectId = projectId;
         }
         public bool IsMultiChannel => throw new NotImplementedException();
 
-        public Project Entity => throw new NotImplementedException();
+        public Project Entity => _httpClient.GetFromJsonAsync<Project>($"projects/{_projectId}").Result;
 
-        public IClassInfoService ClassInfos => throw new NotImplementedException();
+        public IClassInfoService ClassInfos => new ClassInfoService(_httpClient, _projectId);
 
-        public IDatasetService Datasets => throw new NotImplementedException();
+        public IDatasetService Datasets => new DatasetService(_httpClient, _projectId);
 
-        public IInputChannelService InputChannels => new InputChannelService();
+        public IInputChannelService InputChannels => new InputChannelService(_httpClient, _projectId);
 
-        public IItemService Items => new ItemService(_projectId, _httpClient);
+        public IItemService Items => new ItemService(_httpClient, _projectId);
 
         public IMetadataValueService MetadataValues => throw new NotImplementedException();
 
-        public IMetadataKeyService MetadataKeys => throw new NotImplementedException();
+        public IMetadataKeyService MetadataKeys => new MetadataKeyService(_httpClient, _projectId);
 
-        public IImageInfoService ImageInfos => throw new NotImplementedException();
+        public IImageInfoService ImageInfos => new ImageInfoService(_httpClient, _projectId);
 
-        public ITrainConfigurationService TrainConfigurations => throw new NotImplementedException();
+        public ITrainConfigurationService TrainConfigurations => new TrainConfigurationService(_httpClient, _projectId);
 
         public ITrainService Trains => throw new NotImplementedException();
 
-        public IAugmentationService Augmentations => throw new NotImplementedException();
+        public IAugmentationService Augmentations => new AugmentationService(_httpClient, _projectId);
 
         public bool BeginTrans()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("begin trans");
+            return true;
         }
 
         public void CommitTrans()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("commitTrans");
         }
     }
 }

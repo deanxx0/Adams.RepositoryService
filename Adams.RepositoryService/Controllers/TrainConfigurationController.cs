@@ -89,5 +89,19 @@ namespace Adams.RepositoryService.Server.Controllers
 
             return Ok(configuration);
         }
+
+        [HttpPut("projects/{projectId}/configurations")]
+        public ActionResult UpdateConfigurations(string projectId, [FromBody] TrainConfiguration configuration)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var entity = projectService.TrainConfigurations.Find(x => x.Id == configuration.Id).FirstOrDefault();
+            if (entity == null) return BadRequest($"not valid configurationid {configuration.Id}");
+
+            projectService.TrainConfigurations.Update(configuration);
+            return Ok(configuration);
+        }
     }
 }

@@ -36,6 +36,18 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(channels);
         }
 
+        [HttpGet("projects/{projectId}/channels/count")]
+        public ActionResult GetChannelCount(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var count = projectService.InputChannels.Count();
+            return Ok(count);
+        }
+
         [HttpGet("projects/{projectId}/channels/{channelId}")]
         public ActionResult GetChannel(string projectId, string channelId)
         {
@@ -80,5 +92,21 @@ namespace Adams.RepositoryService.Server.Controllers
 
             return Ok(channel);
         }
+
+        [HttpPut("projects/{projectId}/channels")]
+        public ActionResult UpdateChannel(string projectId, [FromBody] InputChannel inputChannel)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var channel = projectService.InputChannels.Find(x => x.Id == inputChannel.Id).FirstOrDefault();
+            if (channel == null) return BadRequest($"Not valid configurationId {inputChannel.Id}");
+
+            projectService.InputChannels.Update(inputChannel);
+            return Ok(inputChannel);
+        }
+
+        
     }
 }

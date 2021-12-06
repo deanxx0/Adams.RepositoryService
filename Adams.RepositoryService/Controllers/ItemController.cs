@@ -38,16 +38,16 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(entity);
         }
 
-        //[HttpGet("projects/{projectId}/items")]
-        //public ActionResult GetAllItem(string projectId)
-        //{
-        //    var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
-        //    if (!System.IO.File.Exists(dbPath))
-        //        return BadRequest($"Not valid projectId {projectId}");
-        //    var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
-        //    var items = projectService.Items.Find(x => x.IsEnabled == true).ToList();
-        //    return Ok(items);
-        //}
+        [HttpGet("projects/{projectId}/items")]
+        public ActionResult GetAllItem(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var items = projectService.Items.Find(x => x.IsEnabled == true).ToList();
+            return Ok(items);
+        }
 
         [HttpGet("projects/{projectId}/items/count")]
         public ActionResult GetItemCount(string projectId)

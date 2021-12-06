@@ -12,7 +12,6 @@ namespace Adams.RepositoryService.Models
     {
         [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
 
         [Required]
@@ -31,7 +30,7 @@ namespace Adams.RepositoryService.Models
         [Required]
         public double Rotation { get; set; }
         [Required]
-        public string BorderMode { get; init; }
+        public BorderModes BorderMode { get; init; }
         [Required]
         public double Contrast { get; set; }
         [Required]

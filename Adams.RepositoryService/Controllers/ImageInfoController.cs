@@ -82,6 +82,17 @@ namespace Adams.RepositoryService.Server.Controllers
         //    return Ok(imageInfo);
         //}
 
+        [HttpGet("projects/{projectId}/imageinfos")]
+        public ActionResult GetImageInfos(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var imageInfos = projectService.ImageInfos.FindAll();
+            return Ok(imageInfos);
+        }
+
         [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/count")]
         public ActionResult GetImageInfoCount(string projectId, string itemId)
         {

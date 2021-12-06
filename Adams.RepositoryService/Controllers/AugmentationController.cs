@@ -51,15 +51,15 @@ namespace Adams.RepositoryService.Server.Controllers
         [HttpPost("projects/{projectId}/augmentations")]
         public ActionResult CreateAugmentation(string projectId, [FromBody] CreateAugmentation createAugmentation)
         {
-            BorderModes borderMode = default;
-            try
-            {
-                borderMode = Convert(createAugmentation.BorderMode);
-            }
-            catch
-            {
-                return BadRequest($"invalid type {createAugmentation.BorderMode}");
-            }
+            //BorderModes borderMode = default;
+            //try
+            //{
+            //    borderMode = Convert(createAugmentation.BorderMode);
+            //}
+            //catch
+            //{
+            //    return BadRequest($"invalid type {createAugmentation.BorderMode}");
+            //}
 
             var entity = new Augmentation(
                 createAugmentation.Name,
@@ -71,7 +71,7 @@ namespace Adams.RepositoryService.Server.Controllers
                 createAugmentation.Shift,
                 createAugmentation.Tilt,
                 createAugmentation.Rotation,
-                borderMode,
+                createAugmentation.BorderMode,
                 createAugmentation.Contrast,
                 createAugmentation.Brightness,
                 createAugmentation.Shade,
@@ -105,6 +105,20 @@ namespace Adams.RepositoryService.Server.Controllers
 
             projectService.Augmentations.Update(augmentation);
 
+            return Ok(augmentation);
+        }
+
+        [HttpPut("projects/{projectId}/augmentations")]
+        public ActionResult UpdateAugmentations(string projectId, [FromBody] Augmentation augmentation)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var entity = projectService.Augmentations.Find(x => x.Id == augmentation.Id).FirstOrDefault();
+            if (entity == null) return BadRequest($"not valid configurationid {augmentation.Id}");
+
+            projectService.Augmentations.Update(augmentation);
             return Ok(augmentation);
         }
 

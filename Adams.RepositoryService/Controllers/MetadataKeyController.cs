@@ -52,20 +52,20 @@ namespace Adams.RepositoryService.Server.Controllers
         public ActionResult CreateMetadataKey(string projectId, [FromBody] CreateMetadataKey createMetadataKey)
         {
 
-            MetadataTypes type = MetadataTypes.Boolean;
-            try
-            {
-                type = convert(createMetadataKey.Type);
-            }
-            catch (Exception)
-            {
-                return BadRequest($"invalid type {createMetadataKey.Type}");
-            }
+            //MetadataTypes type = MetadataTypes.Boolean;
+            //try
+            //{
+            //    type = convert(createMetadataKey.Type);
+            //}
+            //catch (Exception)
+            //{
+            //    return BadRequest($"invalid type {createMetadataKey.Type}");
+            //}
 
             var entity = new MetadataKey(
                 createMetadataKey.Key,
                 createMetadataKey.Description,
-                type,
+                createMetadataKey.Type,
                 true);
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
             if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
@@ -89,6 +89,20 @@ namespace Adams.RepositoryService.Server.Controllers
             projectService.MetadataKeys.Update(metadatakey);
 
             return Ok(metadatakey);
+        }
+
+        [HttpPut("projects/{projectId}/metadatakeys")]
+        public ActionResult UpdateMetadataKey(string projectId, [FromBody] MetadataKey metadataKey)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            
+            var metakey = projectService.MetadataKeys.Find(x => x.Id == metadataKey.Id).FirstOrDefault();
+            if (metakey == null) return BadRequest($"not valid configurationid {metadataKey.Id}");
+
+            projectService.MetadataKeys.Update(metadataKey);
+            return Ok(metadataKey);
         }
 
         private MetadataTypes convert(string typeStr)

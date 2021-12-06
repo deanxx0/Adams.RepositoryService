@@ -81,5 +81,19 @@ namespace Adams.RepositoryService.Server.Controllers
 
             return Ok(classInfo);
         }
+
+        [HttpPut("projects/{projectId}/classinfos")]
+        public ActionResult UpdateClassInfo(string projectId, [FromBody] ClassInfo classInfo)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var classinfo = projectService.ClassInfos.Find(x => x.Id == classInfo.Id).FirstOrDefault();
+            if (classinfo == null) return BadRequest($"Not valid configurationId {classInfo.Id}");
+
+            projectService.ClassInfos.Update(classInfo);
+            return Ok(classInfo);
+        }
     }
 }

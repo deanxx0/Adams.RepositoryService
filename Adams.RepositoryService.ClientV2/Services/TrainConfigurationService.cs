@@ -11,24 +11,24 @@ using System.Threading.Tasks;
 
 namespace Adams.RepositoryService.ClientV2.Services
 {
-    public class InputChannelService : IInputChannelService
+    class TrainConfigurationService : ITrainConfigurationService
     {
         string _projectId;
         HttpClient _httpClient;
-        public InputChannelService(HttpClient httpClient, string projectId)
+        public TrainConfigurationService(HttpClient httpClient, string projectId)
         {
             _httpClient = httpClient;
             _projectId = projectId;
         }
 
-        public void Add(InputChannel entity)
+        public void Add(TrainConfiguration configuration)
         {
             try
             {
-                var res = _httpClient.PostAsJsonAsync($"projects/{_projectId}/channels", entity).Result;
+                var res = _httpClient.PostAsJsonAsync($"projects/{_projectId}/configurations", configuration).Result;
                 if (res.StatusCode != System.Net.HttpStatusCode.OK)
                     throw new Exception(res.ReasonPhrase);
-                var model = HttpContentJsonExtensions.ReadFromJsonAsync<InputChannel>(res.Content).Result;
+                var model = HttpContentJsonExtensions.ReadFromJsonAsync<TrainConfiguration>(res.Content).Result;
             }
             catch (Exception)
             {
@@ -36,36 +36,30 @@ namespace Adams.RepositoryService.ClientV2.Services
             }
         }
 
-        public int Count()
-        {
-            return _httpClient.GetFromJsonAsync<int>($"projects/{_projectId}/channels/count").Result;
-        }
-
-        public IEnumerable<InputChannel> Find(Expression<Func<InputChannel, bool>> predicate)
+        public IEnumerable<TrainConfiguration> Find(Expression<Func<TrainConfiguration, bool>> predicate)
         {
             var allList = this.FindAll().ToList();
             var list = allList.Where(predicate.Compile()).ToList();
             return list;
         }
 
-        public IEnumerable<InputChannel> FindAll()
+        public IEnumerable<TrainConfiguration> FindAll()
         {
-            var list = _httpClient.GetFromJsonAsync<List<InputChannel>>($"projects/{_projectId}/channels").Result;
+            var list = _httpClient.GetFromJsonAsync<List<TrainConfiguration>>($"projects/{_projectId}/configurations").Result;
             return list;
         }
 
-        public void Update(InputChannel entity)
+        public void Update(TrainConfiguration configuration)
         {
             try
             {
-                var res = _httpClient.PutAsJsonAsync<InputChannel>($"projects/{_projectId}/channels", entity).Result;
+                var res = _httpClient.PutAsJsonAsync<TrainConfiguration>($"projects/{_projectId}/configurations", configuration).Result;
             }
             catch (Exception)
             {
 
                 throw;
             }
-      
         }
     }
 }

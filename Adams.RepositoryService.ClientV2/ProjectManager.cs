@@ -74,7 +74,7 @@ namespace Adams.RepositoryService.ClientV2
 
         public IProjectService GetProjectService(string projectId)
         {
-            return new ProjectService(projectId, _httpClient);
+            return new ProjectService(_httpClient, projectId);
         }
     }
 }

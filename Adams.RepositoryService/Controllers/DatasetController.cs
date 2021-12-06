@@ -30,20 +30,20 @@ namespace Adams.RepositoryService.Server.Controllers
         [HttpPost("projects/{projectId}/datasets")]
         public ActionResult CreateDataset(string projectId, [FromBody] CreateDataset createDataset)
         {
-            DatasetTypes type = DatasetTypes.Training;
-            try
-            {
-                type = convert(createDataset.Type);
-            }
-            catch (Exception)
-            {
-                return BadRequest($"invalid type {createDataset.Type}");
-            }
+            //DatasetTypes type = DatasetTypes.Training;
+            //try
+            //{
+            //    type = convert(createDataset.Type);
+            //}
+            //catch (Exception)
+            //{
+            //    return BadRequest($"invalid type {createDataset.Type}");
+            //}
 
             var entity = new Dataset(
                 createDataset.Name,
                 createDataset.Description,
-                type
+                createDataset.Type
                 );
             var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
             if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
@@ -83,6 +83,20 @@ namespace Adams.RepositoryService.Server.Controllers
             if (dataset is null) return BadRequest($"Not valid datasetId {datasetId}");
 
             dataset.SetValue("isenabled", false);
+
+            projectService.Datasets.Update(dataset);
+            return Ok(dataset);
+        }
+
+        [HttpPut("projects/{projectId}/datasets")]
+        public ActionResult UpdateDataset(string projectId, [FromBody] Dataset dataset)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            var entity = projectService.Datasets.Find(x => x.Id == dataset.Id).FirstOrDefault();
+            if (entity == null) return BadRequest($"not valid configurationid {dataset.Id}");
 
             projectService.Datasets.Update(dataset);
             return Ok(dataset);

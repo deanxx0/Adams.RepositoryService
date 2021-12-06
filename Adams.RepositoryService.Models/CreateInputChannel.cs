@@ -11,11 +11,9 @@ namespace Adams.RepositoryService.Models
     {
         [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
         [Required]
         public bool IsColor { get; set; }
-        [Required]
         public string NamingRegex { get; set; }
         [Required]
         public bool IsEnabled { get; set; }
