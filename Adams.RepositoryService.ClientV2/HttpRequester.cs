@@ -123,7 +123,7 @@ namespace Adams.RepositoryService.ClientV2
 
         internal async Task<T> UpdateAsync(object entity)
         {
-            using (var response = await _httpClient.PutAsJsonAsync(_fullUrl, entity))
+            using (var response = await _httpClient.PutAsJsonAsync($"/projects/{_projectId}/items", entity))
             {
                 if (response.Content is object && response.Content.Headers.ContentType.MediaType == "application/json")
                 {

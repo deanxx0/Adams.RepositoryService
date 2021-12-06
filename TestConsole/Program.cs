@@ -19,13 +19,19 @@ namespace TestConsole
             //}
 
             //var item1 = new Item("newitem3");
-            //var item2 = new Item("newitem4");
+
+
+            //var item2 = new Item("mmmmmmmmmmmmmm");
+            // 내가 만든 item2의 Id는 aaa라면
+
             //projectService.Items.Add(item1);
             //projectService.Items.Add(item2);
+            // 이걸로 서버에서 생성된 Id는 bbb이다
 
             var items = projectService.Items.Find((x => x.IsEnabled == true), 1, 30);
-            //var item3 = new Item("updateitem2");
-            //projectService.Items.Update(item3);
+            var item = projectService.Items.Find((x => x.Id == "f96e8d6d-5ca5-4e99-b598-0f9d96a15024"), 1, 30);
+            
+            
 
             if (true)
             {

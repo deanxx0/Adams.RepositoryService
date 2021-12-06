@@ -36,22 +36,14 @@ namespace Adams.RepositoryService.ClientV2.Services
 
         public IEnumerable<Item> Find(Expression<Func<Item, bool>> predicate)
         {
-            return _itemList.Where(predicate.Compile());
+
+            var resItems = _itemList.Where(predicate.Compile()).ToList();
+            foreach (var l in resItems)
+            {
+                yield return l;
+            }
         }
 
-        //public IEnumerable<Item> Find(Expression<Func<Item, bool>> predicate, int page, int perPage = 30)
-        //{
-        //    if (page < 1) throw new Exception();
-
-        //    var resItems = _itemList.Where(predicate.Compile()).ToList();
-
-        //    var startIndex = (perPage * (page - 1)) + 1;
-        //    var endIndex = startIndex + perPage;
-        //    for (int i = startIndex; i < endIndex; i++)
-        //    {
-        //        yield return resItems[i];
-        //    }
-        //}
         public IEnumerable<Item> Find(Expression<Func<Item, bool>> predicate, int page, int perPage = 30)
         {
             if (page < 1) throw new Exception();
@@ -72,7 +64,7 @@ namespace Adams.RepositoryService.ClientV2.Services
             {
                 return pageItems;
             }
-            
+
             return pageItems;
         }
 
@@ -94,10 +86,13 @@ namespace Adams.RepositoryService.ClientV2.Services
 
         public void Update(Item entity)
         {
+            int index = _itemList.FindIndex(x => x.Id == entity.Id);
+            _itemList[index] = entity;
+
             var updated = _httpRequester.UpdateAsync(entity).Result;
 
-            var index = _itemList.FindIndex(x => x.Id.Contains(entity.Id));
-            _itemList[index] = entity;
+            
+            
         }
     }
 }

@@ -104,17 +104,13 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(item);
         }
 
-        [HttpPut("projects/{projectId}/items/{itemId}")]
-        public ActionResult UpdateItem(string projectId, string itemId, [FromBody]Item itemIn)
+        [HttpPut("projects/{projectId}/items")]
+        public ActionResult UpdateItem(string projectId, [FromBody]Item itemIn)
         {
             var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
             if (!System.IO.File.Exists(dbPath))
                 return BadRequest($"Not valid projectId {projectId}");
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
-
-            var item = projectService.Items.Find(x => x.Id == itemId).FirstOrDefault();
-            if (item == null)
-                return BadRequest($"Not valid itemId {itemId}");
 
             projectService.Items.Update(itemIn);
             return Ok(itemIn);
