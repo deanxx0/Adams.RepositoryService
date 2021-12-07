@@ -11,19 +11,20 @@ namespace Adams.RepositoryService.Models
     {
         [Required]
         public string ChannelId { get; set; }
-        [Required]
-        public string StorageType { get; set; }
-        [Required]
-        public string CopyTypes { get; set; }
+        //[Required]
+        //public string StorageType { get; set; }
+        //[Required]
+        //public string CopyTypes { get; set; }
         [Required]
         public string OriginalFilePath { get; set; }
 
-        public CreateImageInfo(string channelId, string storageType, string copyType, string origianlPath)
+        public CreateImageInfo(string channelId, string origianlPath)//, string storageType, string copyType, string origianlPath)
         {
             ChannelId = channelId;
-            StorageType = storageType;
-            CopyTypes = copyType;
             OriginalFilePath = origianlPath;
+            //StorageType = storageType;
+            //CopyTypes = copyType;
+            //OriginalFilePath = origianlPath;
         }
 
         public CreateImageInfo()

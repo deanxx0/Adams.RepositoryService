@@ -38,7 +38,7 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(imageInfo);
         }
 
-        [HttpPost("projects/{projectId}/items/{itemId}/imageinfos")]
+        [HttpPost("projects/{projectId}/items/{itemId}/imageinfos/{channelId}")]
         public ActionResult CreateImageInfo(string projectId, string itemId, [FromBody] CreateImageInfo createImageInfo)
         {
             // item check
@@ -55,43 +55,17 @@ namespace Adams.RepositoryService.Server.Controllers
             // type convert
             // storage convert
             // copy convert
-            var storageType = StorageTypes.Local;
-            var copyType = CopyTypes.None;
-            try
-            {
-                storageType = convertStorageTypes(createImageInfo.StorageType);
-                copyType = convertCopyTypes(createImageInfo.CopyTypes);
-            }
-            catch
-            {
-                return BadRequest($"invalid type {createImageInfo.StorageType} or {createImageInfo.CopyTypes}");
-            }
 
             var entity = new ImageInfo(
                 itemId,
                 createImageInfo.ChannelId,
-                createImageInfo.OriginalFilePath,
-                storageType,
-                copyType
+                createImageInfo.OriginalFilePath
                 );
 
             projectService.ImageInfos.Add(entity);
             return Ok(entity);
         }
 
-        //[HttpGet("projects/{projectId}/items/{itemId}/imageinfos")]
-        //public ActionResult GetallImageInfo(string projectId, string itemId)
-        //{
-        //    var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
-        //    if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
-        //    var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
-        //    //item check
-        //    var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
-        //    if (item is null) return BadRequest($"Not valid itemId {itemId}");
-
-        //    var imageInfo = projectService.ImageInfos.Find(x => x.IsEnabled == true).ToList();
-        //    return Ok(imageInfo);
-        //}
 
         [HttpGet("projects/{projectId}/imageinfos")]
         public ActionResult GetImageInfos(string projectId)

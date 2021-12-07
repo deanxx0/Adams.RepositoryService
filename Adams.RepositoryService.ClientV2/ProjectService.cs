@@ -20,7 +20,7 @@ namespace Adams.RepositoryService.ClientV2
             _httpClient = httpClient;
             _projectId = projectId;
         }
-        public bool IsMultiChannel => throw new NotImplementedException();
+        public bool IsMultiChannel => ClassInfos.Find(x => x.IsEnabled).Count() > 1;
 
         public Project Entity => _httpClient.GetFromJsonAsync<Project>($"projects/{_projectId}").Result;
 
