@@ -23,22 +23,53 @@ namespace Adams.RepositoryService.ClientV2.Services
         }
         public void Add(ImageInfo entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = _httpClient.PostAsJsonAsync($"projects/{_projectId}/imageinfos", entity).Result;
+                if (res.StatusCode != System.Net.HttpStatusCode.OK)
+                    throw new Exception(res.ReasonPhrase);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return _httpClient.GetFromJsonAsync<int>($"projects/{_projectId}/imageinfos/count").Result;
         }
 
         public IEnumerable<ImageInfo> Find(Expression<Func<ImageInfo, bool>> predicate, int page, int perPage = 30)
         {
-            throw new NotImplementedException();
+            if (page < 1) throw new Exception();
+
+            var all = this.FindAll();
+            var list = all.Where(predicate.Compile()).ToList();
+
+            var startIndex = (perPage * (page - 1));
+            var endIndex = startIndex + perPage;
+            List<ImageInfo> pageImageInfos = new();
+            try
+            {
+                for (int i = startIndex; i < endIndex; i++)
+                {
+                    pageImageInfos.Add(list[i]);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
+            return pageImageInfos;
         }
 
         public IEnumerable<ImageInfo> Find(Expression<Func<ImageInfo, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var all = this.FindAll();
+            var list = all.Where(predicate.Compile());
+            return list;
         }
 
         public IEnumerable<ImageInfo> FindAll()

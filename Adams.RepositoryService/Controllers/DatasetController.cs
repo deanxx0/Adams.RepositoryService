@@ -62,6 +62,18 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(datasets);
         }
 
+        [HttpGet("projects/{projectId}/datasets/count")]
+        public ActionResult GetDatasetCount(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var count = projectService.Datasets.Count();
+            return Ok(count);
+        }
+
         [HttpGet("projects/{projectId}/datasets/{datasetId}")]
         public ActionResult GetDataset(string projectId, string datasetId)
         {

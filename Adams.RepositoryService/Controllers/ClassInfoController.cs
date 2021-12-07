@@ -36,6 +36,18 @@ namespace Adams.RepositoryService.Server.Controllers
             return Ok(classInfo);
         }
 
+        [HttpGet("projects/{projectId}/classinfos/count")]
+        public ActionResult GetClassInfoCount(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var count = projectService.ClassInfos.Count();
+            return Ok(count);
+        }
+
         [HttpGet("projects/{projectId}/classinfos/{classInfoId}")]
         public ActionResult GetClassInfo(string projectId, string classInfoId)
         {

@@ -37,12 +37,14 @@ namespace Adams.RepositoryService.ClientV2.Services
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return _httpClient.GetFromJsonAsync<int>($"projects/{_projectId}/classinfos/count").Result;
         }
 
         public IEnumerable<ClassInfo> Find(Expression<Func<ClassInfo, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var allList = this.FindAll().ToList();
+            var list = allList.Where(predicate.Compile()).ToList();
+            return list;
         }
 
         public IEnumerable<ClassInfo> FindAll()

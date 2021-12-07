@@ -27,6 +27,17 @@ namespace Adams.RepositoryService.Server.Controllers
             _repositoryService = repositoryService;
         }
 
+        [HttpPost("projects/{projectId}/imageinfos")]
+        public ActionResult CreateImageInfoOnProject(string projectId, [FromBody] ImageInfo imageInfo)
+        {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+
+            projectService.ImageInfos.Add(imageInfo);
+            return Ok(imageInfo);
+        }
+
         [HttpPost("projects/{projectId}/items/{itemId}/imageinfos")]
         public ActionResult CreateImageInfo(string projectId, string itemId, [FromBody] CreateImageInfo createImageInfo)
         {
@@ -91,6 +102,18 @@ namespace Adams.RepositoryService.Server.Controllers
             var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
             var imageInfos = projectService.ImageInfos.FindAll();
             return Ok(imageInfos);
+        }
+
+        [HttpGet("projects/{projectId}/imageinfos/count")]
+        public ActionResult GetDatasetCount(string projectId)
+        {
+            var dbPath = Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath))
+                return BadRequest($"Not valid projectId {projectId}");
+
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var count = projectService.ImageInfos.Count();
+            return Ok(count);
         }
 
         [HttpGet("projects/{projectId}/items/{itemId}/imageinfos/count")]

@@ -25,42 +25,55 @@ namespace Adams.RepositoryService.ClientV2.Services
 
         public void Add(Item item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = _httpClient.PostAsJsonAsync($"projects/{_projectId}/items", item).Result;
+                if (res.StatusCode != System.Net.HttpStatusCode.OK)
+                    throw new Exception(res.ReasonPhrase);
+                var model = HttpContentJsonExtensions.ReadFromJsonAsync<Item>(res.Content).Result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            var count = _httpClient.GetFromJsonAsync<int>($"projects/{_projectId}/items/count").Result;
+            return count;
         }
 
         public IEnumerable<Item> Find(Expression<Func<Item, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var all = this.FindAll();
+            var list = all.Where(predicate.Compile());
+            return list;
         }
 
         public IEnumerable<Item> Find(Expression<Func<Item, bool>> predicate, int page, int perPage = 30)
         {
-            throw new NotImplementedException();
-            //if (page < 1) throw new Exception();
+            if (page < 1) throw new Exception();
 
-            //var resItems = _itemList.Where(predicate.Compile()).ToList();
+            var all = this.FindAll();
+            var list = all.Where(predicate.Compile()).ToList();
 
-            //var startIndex = (perPage * (page - 1));
-            //var endIndex = startIndex + perPage;
-            //List<Item> pageItems = new();
-            //try
-            //{
-            //    for (int i = startIndex; i < endIndex; i++)
-            //    {
-            //        pageItems.Add(resItems[i]);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    return pageItems;
-            //}
+            var startIndex = (perPage * (page - 1));
+            var endIndex = startIndex + perPage;
+            List<Item> pageItems = new();
+            try
+            {
+                for (int i = startIndex; i < endIndex; i++)
+                {
+                    pageItems.Add(list[i]);
+                }
+            }
+            catch (Exception e)
+            {
+                return pageItems;
+            }
 
-            //return pageItems;
+            return pageItems;
         }
 
         public IEnumerable<Item> FindAll()
@@ -83,7 +96,15 @@ namespace Adams.RepositoryService.ClientV2.Services
 
         public void Update(Item entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = _httpClient.PutAsJsonAsync<Item>($"projects/{_projectId}/items", entity).Result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
