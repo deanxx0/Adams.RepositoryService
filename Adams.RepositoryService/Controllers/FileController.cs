@@ -65,9 +65,34 @@ namespace Adams.RepositoryService.Server.Controllers
         }
 
         [HttpGet("images/{projectId}/{itemId}/{imageInfoId}")]
-        public ActionResult DownloadImage(string projectId, string itemId, string imageInfoId)
+        public FileContentResult DownloadImage(string projectId, string itemId, string imageInfoId)
         {
-            return Ok();
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return null;
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
+            if (item is null) return null;
+            var imageInfo = projectService.ImageInfos.Find(x => x.IsEnabled == true && x.Id == imageInfoId).FirstOrDefault();
+            if (imageInfo is null) return null;
+
+            try
+            {
+                if (!Directory.Exists($"{_saveRoot}\\{projectId}\\"))
+                {
+                    return null;
+                }
+                else
+                {
+                    var files = Directory.GetFiles($"{_saveRoot}\\{projectId}");
+                    var targetFilePath = files.Where(x => x.Contains(imageInfoId)).FirstOrDefault();
+                    var targetFile = new FileInfo(targetFilePath);
+                    return File(System.IO.File.ReadAllBytes(targetFilePath), "application/octet-stream", targetFile.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         [HttpPost("modelfiles/{projectId}/{trainId}")]
