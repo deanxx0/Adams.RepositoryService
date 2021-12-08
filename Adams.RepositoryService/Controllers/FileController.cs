@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using NAVIAIServices.RepositoryService;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,37 +16,51 @@ namespace Adams.RepositoryService.Server.Controllers
     public class FileController : ControllerBase
     {
         public string _saveRoot;
-        public FileController(IConfiguration configuration)
+        IRepositoryService _repositoryService;
+        private string _projectDbRoot;
+
+        public FileController(IRepositoryService repositoryService, IConfiguration configuration)
         {
+            _projectDbRoot = configuration.GetValue<string>("ProjectDbRoot");
             _saveRoot = configuration.GetValue<string>("imageRoot");
+            _repositoryService = repositoryService;
         }
 
         [HttpPost("images/{projectId}/{itemId}/{imageInfoId}")]
-        public async Task<string> UploadImage(string projectId, string itemId, string imageInfoId, IFormFile file)
+        public async Task<IActionResult> UploadImage(string projectId, string itemId, string imageInfoId, IFormFile file)
         {
+            var dbPath = System.IO.Path.Combine(_projectDbRoot, projectId + ".db");
+            if (!System.IO.File.Exists(dbPath)) return BadRequest($"Not valid projectId {projectId}");
+            var projectService = _repositoryService.GetProjectService(dbPath, DBType.LiteDB);
+            var item = projectService.Items.Find(x => x.IsEnabled == true && x.Id == itemId).FirstOrDefault();
+            if (item is null) return BadRequest($"Not valid itemId {itemId}");
+            var imageInfo = projectService.ImageInfos.Find(x => x.IsEnabled == true && x.Id == imageInfoId).FirstOrDefault();
+            if (imageInfo is null) return BadRequest($"Not valid imageInfoId {imageInfoId}");
+
             try
             {
+                var fileType = file.ContentType.Split('/');
                 if (file.Length > 0)
                 {
-                    if (!Directory.Exists(_saveRoot + "\\Upload\\"))
+                    if (!Directory.Exists($"{_saveRoot}\\{projectId}\\"))
                     {
-                        Directory.CreateDirectory(_saveRoot + "\\Upload\\");
+                        Directory.CreateDirectory($"{_saveRoot}\\{projectId}\\");
                     }
-                    using (FileStream fileStream = System.IO.File.Create(_saveRoot + "\\Upload\\" + file.FileName))
+                    using (FileStream fileStream = System.IO.File.Create($"{_saveRoot}\\{projectId}\\{imageInfoId}" + "." + fileType[1]))
                     {
                         file.CopyTo(fileStream);
                         fileStream.Flush();
-                        return _saveRoot + "\\Upload\\" + file.FileName;
+                        return Ok($"{_saveRoot}\\{projectId}\\{imageInfoId}" + "." + fileType[1]);
                     }
                 }
                 else
                 {
-                    return "Failed";
+                    return BadRequest("Failed");
                 }
             }
             catch (Exception ex)
             {
-                return ex.Message.ToString();
+                return BadRequest(ex.Message.ToString());
             }
         }
 
