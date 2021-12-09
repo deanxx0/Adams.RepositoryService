@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adams.RepositoryService.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{C40328BF-E771-4A9E-B74D-FB0C380C76E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adams.RepositoryService.ClientV2", "Adams.RepositoryService.ClientV2\Adams.RepositoryService.ClientV2.csproj", "{D12668DE-BCCA-4220-88B3-F33D1D130B1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adams.RepositoryService.ClientV2", "Adams.RepositoryService.ClientV2\Adams.RepositoryService.ClientV2.csproj", "{D12668DE-BCCA-4220-88B3-F33D1D130B1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NAVIAIServices.StorageService", "..\naviai-services\NAVIAIServices.StorageService\NAVIAIServices.StorageService.csproj", "{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,14 @@ Global
 		{D12668DE-BCCA-4220-88B3-F33D1D130B1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D12668DE-BCCA-4220-88B3-F33D1D130B1F}.Release|x64.ActiveCfg = Release|x64
 		{D12668DE-BCCA-4220-88B3-F33D1D130B1F}.Release|x64.Build.0 = Release|x64
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Debug|x64.ActiveCfg = Debug|x64
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Debug|x64.Build.0 = Debug|x64
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Release|x64.ActiveCfg = Release|x64
+		{9164CC98-D4C5-4B35-B6AA-2AE8FE43A203}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

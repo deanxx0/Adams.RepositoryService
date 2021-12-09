@@ -1,6 +1,8 @@
 ﻿using Adams.RepositoryService.ClientV2;
 using NAVIAIServices.RepositoryService.Entities;
 using NAVIAIServices.RepositoryService.Enums;
+using NAVIAIServices.RepositoryService.Interfaces;
+using NAVIAIServices.StorageService;
 using System;
 using System.Linq;
 
@@ -10,10 +12,15 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            ProjectManager manager = new ProjectManager("http://10.10.1.112:5005", "u1", "123");
 
-            var projectService =  manager.GetProjectService("5795f553-4738-4e4e-8797-1b286563d858");
 
+            ProjectManager manager = new ProjectManager("http://10.10.1.112:5000", "1", "1");
+
+            var projectService =  manager.GetProjectService("00bc3a26-2e66-489c-96c7-42dce1c6add3");
+
+            IStorageService storageService = new RestStorageService("http://10.10.1.112:5000");
+
+            storageService.DownloadImage(projectService,"09691833-a495-4b11-ab2d-ba27e989d24a", "0df7d292-08f0-4688-99af-994efafc3643", @"C:\Users\st\Desktop\test.png");
             //foreach(var item in projectService.Items.FindAll())
             //{
 

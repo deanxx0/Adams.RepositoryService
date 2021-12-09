@@ -39,14 +39,20 @@ namespace Adams.RepositoryService.Server.Controllers
 
             try
             {
-                var fileType = file.ContentType.Split('/');
+                //Path.GetExtension("Asdfsadf");
+                var fileType = file.ContentType.Split('/'); // png, jpg, bmp, tiff
                 if (file.Length > 0)
                 {
+                    var filePath = $"{_saveRoot}\\{projectId}\\{imageInfoId}" + "." + fileType[1];
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        return BadRequest("File already exist");
+                    }
                     if (!Directory.Exists($"{_saveRoot}\\{projectId}\\"))
                     {
                         Directory.CreateDirectory($"{_saveRoot}\\{projectId}\\");
                     }
-                    using (FileStream fileStream = System.IO.File.Create($"{_saveRoot}\\{projectId}\\{imageInfoId}" + "." + fileType[1]))
+                    using (FileStream fileStream = System.IO.File.Create(filePath))
                     {
                         file.CopyTo(fileStream);
                         fileStream.Flush();

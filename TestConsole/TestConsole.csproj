@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\naviai-services\NAVIAIServices.StorageService\NAVIAIServices.StorageService.csproj" />
     <ProjectReference Include="..\Adams.RepositoryService.ClientV2\Adams.RepositoryService.ClientV2.csproj" />
   </ItemGroup>
 
