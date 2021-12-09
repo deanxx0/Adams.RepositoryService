@@ -98,67 +98,9 @@ namespace Adams.RepositoryService.Server.Controllers
         [HttpPost("modelfiles/{projectId}/{trainId}")]
         public ActionResult DownloadModelFile(string projectId, string trainId)
         {
+
+
             return Ok();
         }
-
-
-
-        //[HttpPost("images/uploadtowwwroot")]
-        //public async Task<string> UploadTest(IFormFile file)
-        //{
-        //    try
-        //    {
-        //        if (file.Length > 0)
-        //        {
-        //            if (!Directory.Exists(_environment.WebRootPath + "\\Upload\\"))
-        //            {
-        //                Directory.CreateDirectory(_environment.WebRootPath + "\\Upload\\");
-        //            }
-        //            using (FileStream fileStream = System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + file.FileName))
-        //            {
-        //                file.CopyTo(fileStream);
-        //                fileStream.Flush();
-        //                return "\\Upload\\" + file.FileName;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return "Failed";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message.ToString();
-        //    }
-        //}
-
-        //[HttpPost("images/uploadtolocal")]
-        //public async Task<string> UploadTestLocal(IFormFile file)
-        //{
-        //    try
-        //    {
-        //        if (file.Length > 0)
-        //        {
-        //            if (!Directory.Exists(_saveRoot + "\\Upload\\"))
-        //            {
-        //                Directory.CreateDirectory(_saveRoot + "\\Upload\\");
-        //            }
-        //            using (FileStream fileStream = System.IO.File.Create(_saveRoot + "\\Upload\\" + file.FileName))
-        //            {
-        //                file.CopyTo(fileStream);
-        //                fileStream.Flush();
-        //                return "\\Upload\\" + file.FileName;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return "Failed";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message.ToString();
-        //    }
-        //}
     }
 }
